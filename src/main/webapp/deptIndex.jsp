@@ -209,12 +209,11 @@
 
             <!--sidebar start-->
             <aside>
-                <div id="sidebar" class="nav-collapse ">
+                <div id="sidebar"  class="nav-collapse ">
                     <!-- sidebar menu start-->
                     <ul class="sidebar-menu" id="nav-accordion">
 
-                        <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle"
-                                                                        width="60"></a></p>
+                        <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
                         <h5 class="centered">${NowUser.username}</h5>
 
                         <li class="sub-menu"><a href="javascript:;"> <i
@@ -231,7 +230,7 @@
                         </a>
                             <ul class="sub">
                                 <li><a href="queryEmployee">员工信息</a></li>
-                                <li><a href="gallery.html">添加员工</a></li>
+                                <li><a data-toggle="modal" href="#insertEmployeeModal">添加员工</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu"><a href="javascript:;"> <i
@@ -239,24 +238,77 @@
                         </a>
                             <ul class="sub">
                                 <li><a href="queryDept">部门信息</a></li>
-                                <li><a data-toggle="modal" href="#insertDeptModal">添加部门</a></li>
+                                <li><a data-toggle="modal"  href="#insertDeptModal">添加部门</a></li>
                             </ul>
                         </li>
                         <li class="sub-menu"><a href="javascript:;"> <i
                                 class="fa fa-tasks"></i> <span>岗位模块</span>
                         </a>
                             <ul class="sub">
-                                <li><a href="form_component.html">岗位信息</a></li>
-                                <li><a href="login.html">添加岗位</a></li>
+                                <li><a href="queryJob">岗位信息</a></li>
+                                <li><a data-toggle="modal" href="#insertJobModal">添加岗位</a></li>
                             </ul>
                         </li>
-
                     </ul>
                     <!-- sidebar menu end-->
                 </div>
             </aside>
             <!--sidebar end-->
 
+            <%--  user--%>
+            <form method="post" action="/oa/insertUser" enctype="multipart/form-data">
+                <!-- 模态框Modal -->
+                <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
+                     tabindex="-1" id="insertUserModal" class="modal fade">
+                    <!-- 设置请求方式为method     类型 enctype="multipart/form-data"  -->
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">&times;
+                                </button>
+                                <h4 class="modal-title">添加管理员</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>登录名：</p>
+                                <input type="text" name="loginname" placeholder="请输入登录名"
+                                       autocomplete="off" class="form-control placeholder-no-fix">
+
+                            </div>
+                            <div class="modal-body">
+                                <p>用户名：</p>
+                                <input type="text" name="username" placeholder="请输入用户名"
+                                       autocomplete="off" class="form-control placeholder-no-fix">
+
+                            </div>
+                            <div class="modal-body">
+                                <p>密码：</p>
+                                <input type="text" name="password" placeholder="请输入密码"
+                                       autocomplete="off" class="form-control placeholder-no-fix">
+
+                            </div>
+                            <div class="modal-body">
+                                <p>状态：</p>
+                                <select name="status" class="form-control placeholder-no-fix">
+                                    <option value="1">超级管理员</option>
+                                    <option value="0">普通管理员</option>
+                                </select>
+                            </div>
+                            <div class="modal-body">
+                                <p>头像：</p>
+                                <input type="file" name="filepart" autocomplete="off"
+                                       class="form-control placeholder-no-fix">
+                            </div>
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                                <button class="btn btn-theme" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <%--  dept--%>
             <form method="post" action="/oa/insertDept" enctype="multipart/form-data">
                 <!-- 模态框Modal -->
                 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
@@ -269,7 +321,7 @@
                                         aria-hidden="true">&times;
                                 </button>
 
-                                <h4 class="modal-title">增加部门信息</h4>
+                                <h4 class="modal-title">增加部门</h4>
                             </div>
                             <div class="modal-body">
                                 <p>name：</p>
@@ -283,6 +335,46 @@
                             <div class="modal-body">
                                 <p>remark：</p>
                                 <input type="text" name="remark" value="${dept.remark}"
+                                       placeholder="请输入remark" autocomplete="off"
+                                       class="form-control placeholder-no-fix">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                                <button class="btn btn-theme" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <%--  job--%>
+            <form method="post" action="/oa/insertJob" enctype="multipart/form-data">
+                <!-- 模态框Modal -->
+                <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
+                     tabindex="-1" id="insertJobModal" class="modal fade">
+                    <!-- 设置请求方式为method     类型 enctype="multipart/form-data"  -->
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">&times;
+                                </button>
+
+                                <h4 class="modal-title">增加岗位</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>name：</p>
+                                <input type="hidden" name="id" value="${job.id}"/>
+                                <input
+                                        type="text" name="name" value="${job.name}"
+                                        placeholder="请输入部门名" autocomplete="off"
+                                        class="form-control placeholder-no-fix">
+
+                            </div>
+                            <div class="modal-body">
+                                <p>remark：</p>
+                                <input type="text" name="remark" value="${job.remark}"
                                        placeholder="请输入remark" autocomplete="off"
                                        class="form-control placeholder-no-fix">
                             </div>

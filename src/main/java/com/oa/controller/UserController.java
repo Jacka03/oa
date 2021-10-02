@@ -23,13 +23,13 @@ public class UserController {
     @Value("${pageSize}")
     private Integer pageSize;
 
-    private User NowUser;
+    private User nowUser;
 
     @GetMapping("/loginUser")
     public String login(Model model, @RequestParam("loginname") String loginname, @RequestParam("password") String password){
         // System.out.println(pageSize);
         User user = userService.login(loginname, password);
-        this.NowUser = user;
+        this.nowUser = user;
         if(user != null) {
             model.addAttribute("NowUser", user);
             return  "index";
@@ -46,11 +46,11 @@ public class UserController {
         }
 
         Page<User> page = userService.queryUser(curPageNumber, pageSize);
-        model.addAttribute("NowUser", this.NowUser);
+        model.addAttribute("NowUser", this.nowUser);
         model.addAttribute("userList", page.getResult());
         model.addAttribute("pageInfo", page.toPageInfo());
 
-        return "UserIndex";
+        return "userIndex";
     }
 
 
@@ -109,7 +109,7 @@ public class UserController {
         model.addAttribute("user", user);
         //3、跳转UserUpdate.jsp页面
 
-        return "UserUpdate";
+        return "userUpdate";
     }
 
 
@@ -137,12 +137,12 @@ public class UserController {
 
         // System.out.println(imgname);
         User user = new User(id, username, password, loginname, status, imgname);
-        if(user.getId().equals(this.NowUser.getId())) {
-            this.NowUser = user;
+        if(user.getId().equals(this.nowUser.getId())) {
+            this.nowUser = user;
         }
 
         boolean flag = userService.updataUser(user);
-        model.addAttribute("NowUser", this.NowUser);
+        model.addAttribute("NowUser", this.nowUser);
 
         if(flag) {
             return "redirect:queryUser.action";
