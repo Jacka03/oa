@@ -9,7 +9,7 @@ public interface UserService {
 
     public User queryUserById(Integer userid);
 
-    public Page<User> queryUser(Integer curPageNumber, Integer pageSize);
+    public Page<User> queryUser(Integer curPageNumber, Integer pageSize, String name);
 
     public User login(String loginname, String password);
 

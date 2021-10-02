@@ -14,7 +14,7 @@ public interface UserDao {
 
     User queryUserByLoginnameAndPassword(@Param("loginname")String loginname, @Param("password")String password);
 
-    Page<User> findAll();
+    Page<User> findAll(String name);
 
     Integer update(User user);
 

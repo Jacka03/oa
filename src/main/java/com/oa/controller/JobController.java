@@ -3,6 +3,7 @@ package com.oa.controller;
 
 import com.github.pagehelper.Page;
 import com.oa.pojo.Job;
+import com.oa.pojo.User;
 import com.oa.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,16 +24,22 @@ public class JobController {
     @Value("${pageSize}")
     private Integer pageSize;
 
+    private String username;
 
     @GetMapping("/queryJob")
-    public String queryJob(Model model, @RequestParam(value="pn",  required=false) Integer curPageNumber) {
+    public String queryJob(Model model,
+                           @RequestParam(value="username",  required=false) String username,
+                           @RequestParam(value="pn",  required=false) Integer curPageNumber) {
 
+        this.username = username;
         if (curPageNumber == null) {
             curPageNumber = 1;
         }
 
         Page<Job> page = jobService.queryJob(curPageNumber, pageSize);
 
+
+        model.addAttribute("username", username);
         model.addAttribute("jobList", page.getResult());
         model.addAttribute("pageInfo", page.toPageInfo());
 

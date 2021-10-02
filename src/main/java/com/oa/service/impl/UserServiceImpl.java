@@ -27,10 +27,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> queryUser(Integer curPageNumber, Integer pageSize) {
+    public Page<User> queryUser(Integer curPageNumber, Integer pageSize, String name) {
 
         PageHelper.startPage(curPageNumber, pageSize);
-        Page<User> page = userDao.findAll();
+        Page<User> page = userDao.findAll(name);
         List<User> user1 = page.getResult();
         return page;
 

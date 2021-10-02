@@ -26,7 +26,9 @@ public class UserController {
     private User nowUser;
 
     @GetMapping("/loginUser")
-    public String login(Model model, @RequestParam("loginname") String loginname, @RequestParam("password") String password){
+    public String login(Model model,
+                        @RequestParam("loginname") String loginname,
+                        @RequestParam("password") String password){
         // System.out.println(pageSize);
         User user = userService.login(loginname, password);
         this.nowUser = user;
@@ -39,13 +41,15 @@ public class UserController {
     }
 
     @GetMapping("/queryUser")
-    public String queryUser(Model model, @RequestParam(value="pn",  required=false) Integer curPageNumber) {
+    public String queryUser(Model model,
+                            @RequestParam(value="name",  required=false) String name,
+                            @RequestParam(value="pn",  required=false) Integer curPageNumber) {
 
         if (curPageNumber == null) {
             curPageNumber = 1;
         }
 
-        Page<User> page = userService.queryUser(curPageNumber, pageSize);
+        Page<User> page = userService.queryUser(curPageNumber, pageSize, name);
         model.addAttribute("NowUser", this.nowUser);
         model.addAttribute("userList", page.getResult());
         model.addAttribute("pageInfo", page.toPageInfo());
@@ -108,6 +112,7 @@ public class UserController {
         //2、保存user对象数据保存在属性作用
         model.addAttribute("user", user);
         //3、跳转UserUpdate.jsp页面
+        System.out.println(user);
 
         return "userUpdate";
     }

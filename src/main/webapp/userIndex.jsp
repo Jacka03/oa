@@ -232,7 +232,7 @@
                         class="fa fa-book"></i> <span>部门模块</span>
                 </a>
                     <ul class="sub">
-                        <li><a href="queryDept">部门信息</a></li>
+                        <li><a href="queryDept?username=${NowUser.username}">部门信息</a></li>
                         <li><a data-toggle="modal"  href="#insertDeptModal">添加部门</a></li>
                     </ul>
                 </li>
@@ -240,7 +240,7 @@
                         class="fa fa-tasks"></i> <span>岗位模块</span>
                 </a>
                     <ul class="sub">
-                        <li><a href="queryJob">岗位信息</a></li>
+                        <li><a href="queryJob?username=${NowUser.username}">岗位信息</a></li>
                         <li><a data-toggle="modal" href="#insertJobModal">添加岗位</a></li>
                     </ul>
                 </li>

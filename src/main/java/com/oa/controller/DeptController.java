@@ -25,17 +25,21 @@ public class DeptController {
     @Value("${pageSize}")
     private Integer pageSize;
 
-    // private User NowUser;
+    private String username;
 
     @GetMapping("/queryDept")
-    public String queryDept(Model model, @RequestParam(value="pn",  required=false) Integer curPageNumber) {
+    public String queryDept(Model model,
+                            @RequestParam(value="username",  required=false) String username,
+                            @RequestParam(value="pn",  required=false) Integer curPageNumber) {
 
+        this.username = username;
         if (curPageNumber == null) {
             curPageNumber = 1;
         }
 
         Page<Dept> page = deptService.queryDept(curPageNumber, pageSize);
 
+        model.addAttribute("username", username);
         model.addAttribute("deptList", page.getResult());
         model.addAttribute("pageInfo", page.toPageInfo());
 
