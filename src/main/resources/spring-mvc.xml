@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <mvc:annotation-driven/>
+    <!--只加载Controller-->
+    <context:component-scan base-package="com.oa.controller"/>
+
+    <context:property-placeholder location="classpath:data.properties"/>
+
+    <!--放行所有静态资源-->
+    <mvc:default-servlet-handler/>
+    <!-- 对静态资源放行 -->
+    <!--<mvc:resources location="/Static-Resources/css/" mapping="/css/**"/>-->
+    <!--<mvc:resources location="/Static-Resources/images/" mapping="/images/**"/>-->
+    <!--<mvc:resources location="/Static-Resources/js/" mapping="/js/**"/>-->
+
+    <!-- 3.视图解释器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <!--<property name="prefix" value="/WEB-INF/jsp/"/>-->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--文件上传解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10000000"/>
+    </bean>
+
+    <!--<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">-->
+
+    <!--    <property name="locations">-->
+    <!--        <list>-->
+    <!--            <value>classpath:*.properties</value>-->
+    <!--        </list>-->
+    <!--    </property>-->
+    <!--</bean>-->
+
+    <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">-->
+    <!--    <property name="properties" ref="configProperties"/>-->
+    <!--</bean>-->
+
+</beans>

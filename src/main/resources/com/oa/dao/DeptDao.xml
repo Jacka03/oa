@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.dao.DeptDao">
+    <insert id="add">
+        insert into dept_inf(name, remark) values(#{name}, #{remark})
+    </insert>
+    <update id="update">
+        update dept_inf
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from dept_inf where id = #{id}
+    </delete>
+
+    <select id="findAll" resultType="com.oa.pojo.Dept">
+        select *
+        from dept_inf
+    </select>
+
+    <select id="queryDeptById" resultType="com.oa.pojo.Dept">
+        select *
+        from dept_inf
+        where id = #{id}
+    </select>
+
+</mapper>
