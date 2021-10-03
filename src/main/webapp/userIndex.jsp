@@ -232,7 +232,7 @@
                         class="fa fa-book"></i> <span>部门模块</span>
                 </a>
                     <ul class="sub">
-                        <li><a href="queryDept?username=${NowUser.username}">部门信息</a></li>
+                        <li><a href="queryDept">部门信息</a></li>
                         <li><a data-toggle="modal"  href="#insertDeptModal">添加部门</a></li>
                     </ul>
                 </li>
@@ -240,7 +240,7 @@
                         class="fa fa-tasks"></i> <span>岗位模块</span>
                 </a>
                     <ul class="sub">
-                        <li><a href="queryJob?username=${NowUser.username}">岗位信息</a></li>
+                        <li><a href="queryJob">岗位信息</a></li>
                         <li><a data-toggle="modal" href="#insertJobModal">添加岗位</a></li>
                     </ul>
                 </li>
@@ -406,8 +406,7 @@
                             <%--<input id="page" name="pageNo" type="hidden" value="1" />--%>
                             <div class="form-group">
                                 <label class="sr-only">Email
-                                    address</label> <input type="text" class="form-control" placeholder="User Name" name="name"
-                                                           value="${username}">
+                                    address</label> <input type="text" class="form-control" placeholder="User Name" name="name">
                             </div>
                             <button type="submit" class="btn btn-theme">Submit</button>
                         </form>
@@ -509,8 +508,6 @@
                         </div>
                     </form>
                     <!-- 分页提交的请求表单 -->
-
-
                 </div>
                 <!-- /col-lg-9 END SECTION MIDDLE -->
 

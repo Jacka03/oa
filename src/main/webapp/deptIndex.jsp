@@ -214,7 +214,7 @@
                     <ul class="sidebar-menu" id="nav-accordion">
 
                         <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-                        <h5 class="centered">${username}</h5>
+                        <h5 class="centered">${NowUser.username}</h5>
 
                         <li class="sub-menu"><a href="javascript:;"> <i
                                 class="fa fa-desktop"></i> <span>管理员模块</span>
@@ -237,7 +237,7 @@
                                 class="fa fa-book"></i> <span>部门模块</span>
                         </a>
                             <ul class="sub">
-                                <li><a href="queryDept?username=${username}">部门信息</a></li>
+                                <li><a href="queryDept">部门信息</a></li>
                                 <li><a data-toggle="modal"  href="#insertDeptModal">添加部门</a></li>
                             </ul>
                         </li>
@@ -245,7 +245,7 @@
                                 class="fa fa-tasks"></i> <span>岗位模块</span>
                         </a>
                             <ul class="sub">
-                                <li><a href="queryJob?username=${username}">岗位信息</a></li>
+                                <li><a href="queryJob">岗位信息</a></li>
                                 <li><a data-toggle="modal" href="#insertJobModal">添加岗位</a></li>
                             </ul>
                         </li>

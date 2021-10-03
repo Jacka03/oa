@@ -25,11 +25,12 @@ public class EmployeeController {
     private Integer pageSize;
 
     @GetMapping("/queryEmployee")
-    public String queryEmployee(Model model, @RequestParam(value = "pn", required = false) Integer curPageNumber) {
+    public String queryEmployee(Model model,
+                                @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
 
-        if (curPageNumber == null) {
-            curPageNumber = 1;
-        }
+        // if (curPageNumber == null) {
+        //     curPageNumber = 1;
+        // }
 
         Page<Employee> page = employeeService.queryEmployee(curPageNumber, pageSize);
         List<Employee> result = page.getResult();
