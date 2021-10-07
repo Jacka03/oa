@@ -9,11 +9,13 @@ import com.oa.service.JobService;
 import com.oa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 
@@ -27,19 +29,30 @@ public class UserController {
     @Value("${pageSize}")
     private Integer pageSize;
 
+    @Value("${filepath}")
+    private String filepath;
+
     private User nowUser;
 
     @GetMapping("/loginUser")
     public String login(Model model,
+                        HttpServletRequest request,
                         @RequestParam("loginname") String loginname,
                         @RequestParam("password") String password){
 
         User user = userService.login(loginname, password);
         this.nowUser = user;
         if(user != null) {
+
+
+            String temPath = filepath + this.nowUser.getImgname();
+
             model.addAttribute("NowUser", user);
+            model.addAttribute("filepath", temPath);
+
             return  "index";
         }else {
+            System.out.println("err");
             return null;
         }
     }
@@ -81,7 +94,8 @@ public class UserController {
         User user = new User(username, password, loginname, status, imgname);
         System.out.println(filepart);
         try {
-            filepart.transferTo(new File("E:/code/实训/file/"+imgname));
+            filepart.transferTo(new File(filepath + imgname));
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -9,7 +9,7 @@ public class User implements Serializable {
   private String loginname;
   private String password;
   private Integer status;
-  private Date createdate;
+  private Date createDate;
   private String username;
   private String imgname;
 
@@ -40,7 +40,7 @@ public class User implements Serializable {
             ", loginname='" + loginname + '\'' +
             ", password='" + password + '\'' +
             ", status='" + status + '\'' +
-            ", createdate=" + createdate +
+            ", createDate=" + createDate +
             ", username='" + username + '\'' +
             ", imgname='" + imgname + '\'' +
             '}';
@@ -78,12 +78,12 @@ public class User implements Serializable {
     this.status = status;
   }
 
-  public Date getCreatedate() {
-    return createdate;
+  public Date getCreateDate() {
+    return createDate;
   }
 
-  public void setCreatedate(Date createdate) {
-    this.createdate = createdate;
+  public void setCreateDate(Date createDate) {
+    this.createDate = createDate;
   }
 
   public String getUsername() {

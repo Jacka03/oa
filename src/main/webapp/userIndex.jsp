@@ -442,7 +442,7 @@
                                             <td>${Item.password}</td>
                                             <td><span class="label label-info label-mini">${Item.username}</span>
                                             </td>
-                                            <td>${Item.createdate}</td>
+                                            <td>${Item.createDate}</td>
                                             <td>
                                                 <c:if test="${Item.status==1}">超级管理员</c:if>
                                                 <c:if test="${Item.status==0}">普通管理员</c:if>

@@ -22,14 +22,17 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `announcement_info`;
 CREATE TABLE `announcement_info`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `createtime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `uid` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `uid`(`uid`) USING BTREE,
-  CONSTRAINT `announcement_info_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `user_inf` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+                                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                                      `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                      `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                      `create_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+                                      `uid` int(11) NULL DEFAULT NULL,
+                                      PRIMARY KEY (`id`) USING BTREE,
+                                      INDEX `uid`(`uid`) USING BTREE,
+                                      CONSTRAINT `announcement_info` FOREIGN KEY (`uid`) REFERENCES `user_inf` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+-- ----------------------------
+-- announcement_info_ibfk_1
+-- ----------------------------
 ) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 -- ----------------------------
@@ -44,10 +47,10 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `dept_inf`;
 CREATE TABLE `dept_inf`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `remark` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                             `id` int(11) NOT NULL AUTO_INCREMENT,
+                             `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                             `remark` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                             PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 -- ----------------------------
@@ -62,13 +65,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `document_inf`;
 CREATE TABLE `document_inf`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `remark` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `uploader` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `FK_DOCUMENT_USER`(`uploader`) USING BTREE
+                                 `id` int(11) NOT NULL AUTO_INCREMENT,
+                                 `filename` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                 `remark` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                                 `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                 `uploader` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 INDEX `FK_DOCUMENT_USER`(`uploader`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 -- ----------------------------
@@ -82,25 +85,25 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `employee_inf`;
 CREATE TABLE `employee_inf`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `deptid` int(11) NOT NULL,
-  `jobid` int(11) NOT NULL,
-  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `cardid` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `sex` int(11) NOT NULL DEFAULT 1,
-  `party` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `race` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `education` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `createdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `imgname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `FK_EMP_DEPT`(`deptid`) USING BTREE,
-  INDEX `FK_EMP_JOB`(`jobid`) USING BTREE,
-  CONSTRAINT `FK_EMP_DEPT` FOREIGN KEY (`deptid`) REFERENCES `dept_inf` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `FK_EMP_JOB` FOREIGN KEY (`jobid`) REFERENCES `job_inf` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+                                 `id` int(11) NOT NULL AUTO_INCREMENT,
+                                 `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                 `dept_id` int(11) NOT NULL,
+                                 `job_id` int(11) NOT NULL,
+                                 `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                 `card_id` varchar(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                 `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                 `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                                 `sex` int(11) NOT NULL DEFAULT 1,
+                                 `party` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                                 `race` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                                 `education` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                                 `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                 `imgname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 INDEX `FK_EMP_DEPT`(`dept_id`) USING BTREE,
+                                 INDEX `FK_EMP_JOB`(`job_id`) USING BTREE,
+                                 CONSTRAINT `FK_EMP_DEPT` FOREIGN KEY (`dept_id`) REFERENCES `dept_inf` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+                                 CONSTRAINT `FK_EMP_JOB` FOREIGN KEY (`job_id`) REFERENCES `job_inf` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 -- ----------------------------
@@ -115,10 +118,10 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `job_inf`;
 CREATE TABLE `job_inf`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `remark` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                            `id` int(11) NOT NULL AUTO_INCREMENT,
+                            `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                            `remark` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                            PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 -- ----------------------------
@@ -133,14 +136,14 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `user_inf`;
 CREATE TABLE `user_inf`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `loginname` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `password` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `createdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `imgname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                             `id` int(11) NOT NULL AUTO_INCREMENT,
+                             `loginname` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                             `password` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+                             `status` int(11) NOT NULL DEFAULT 1,
+                             `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                             `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                             `imgname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+                             PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci;
 
 -- ----------------------------

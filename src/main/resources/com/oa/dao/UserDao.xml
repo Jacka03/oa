@@ -4,7 +4,7 @@
 
 
     <insert id="insert">
-        insert into user_inf(loginname, password,  status ,  username ,  imgname)
+        insert into user_inf(loginname, password, status, username, imgname)
         values(#{loginname}, #{password}, #{status}, #{username}, #{imgname})
     </insert>
 
