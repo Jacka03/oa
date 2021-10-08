@@ -15,4 +15,6 @@ public interface DeptService {
     boolean deleteDept(Integer id);
 
     boolean addDept(Dept dept);
+
+    Page<Dept> queryDeptList();
 }

@@ -7,6 +7,9 @@ public class Job implements Serializable {
     private String name;
     private String remark;
 
+    public Job() {
+    }
+
     public Job(Integer id, String name, String remark) {
         this.id = id;
         this.name = name;

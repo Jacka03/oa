@@ -7,6 +7,9 @@ public class Dept implements Serializable {
     private String name;
     private String remark;
 
+    public Dept() {
+    }
+
     public Dept(Integer id, String name, String remark) {
         this.id = id;
         this.name = name;

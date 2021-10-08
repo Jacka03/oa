@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
         PageHelper.startPage(curPageNumber, pageSize);
         Page<User> page = userDao.findAll(name);
-        List<User> user1 = page.getResult();
+        // List<User> user1 = page.getResult();
         return page;
 
     }

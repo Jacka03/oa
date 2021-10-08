@@ -2,9 +2,11 @@ package com.oa.controller;
 
 import com.github.pagehelper.Page;
 import com.oa.pojo.Dept;
+import com.oa.pojo.Employee;
 import com.oa.pojo.Job;
 import com.oa.pojo.User;
 import com.oa.service.DeptService;
+import com.oa.service.EmployeeService;
 import com.oa.service.JobService;
 import com.oa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -25,6 +28,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
 
     @Value("${pageSize}")
     private Integer pageSize;
@@ -34,24 +38,30 @@ public class UserController {
 
     private User nowUser;
 
+    private Page<Dept> depts;
+    private Page<Job> jobs;
+
     @GetMapping("/loginUser")
     public String login(Model model,
                         HttpServletRequest request,
                         @RequestParam("loginname") String loginname,
-                        @RequestParam("password") String password){
+                        @RequestParam("password") String password) {
 
         User user = userService.login(loginname, password);
         this.nowUser = user;
-        if(user != null) {
-
-
+        if (user != null) {
             String temPath = filepath + this.nowUser.getImgname();
 
             model.addAttribute("NowUser", user);
             model.addAttribute("filepath", temPath);
 
-            return  "index";
-        }else {
+            depts = deptService.queryDeptList();
+            jobs = jobService.queryJobList();
+            model.addAttribute("deptList", depts.getResult());
+            model.addAttribute("jobList", jobs.getResult());
+
+            return "index";
+        } else {
             System.out.println("err");
             return null;
         }
@@ -59,11 +69,17 @@ public class UserController {
 
     @GetMapping("/queryUser")
     public String queryUser(Model model,
-                            @RequestParam(value="name",  required=false) String name,
-                            @RequestParam(value="pn",  required=false, defaultValue = "1") Integer curPageNumber) {
+                            @RequestParam(value = "name", required = false) String name,
+                            @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
 
         Page<User> page = userService.queryUser(curPageNumber, pageSize, name);
         model.addAttribute("NowUser", this.nowUser);
+
+        depts = deptService.queryDeptList();
+        jobs = jobService.queryJobList();
+        model.addAttribute("deptList", depts.getResult());
+        model.addAttribute("jobList", jobs.getResult());
+
         model.addAttribute("userList", page.getResult());
         model.addAttribute("pageInfo", page.toPageInfo());
 
@@ -73,6 +89,7 @@ public class UserController {
 
     /**
      * 增加用户
+     *
      * @param model
      * @param loginname
      * @param password
@@ -83,11 +100,11 @@ public class UserController {
      */
     @PostMapping("/insertUser")
     public String insertUser(Model model,
-                              @RequestParam(value="loginname",  required=false) String loginname,
-                              @RequestParam(value="password",  required=false) String password,
-                              @RequestParam(value="status",  required=false) Integer status,
-                              @RequestParam(value="username",  required=false) String username,
-                              @RequestPart(value="filepart",  required=false) MultipartFile filepart) {
+                             @RequestParam(value = "loginname", required = false) String loginname,
+                             @RequestParam(value = "password", required = false) String password,
+                             @RequestParam(value = "status", required = false) Integer status,
+                             @RequestParam(value = "username", required = false) String username,
+                             @RequestPart(value = "filepart", required = false) MultipartFile filepart) {
 
         String imgname = filepart.getOriginalFilename();
         //创建user对象将数据进行封装
@@ -112,12 +129,13 @@ public class UserController {
 
     /**
      * 根据id查询将要修改的用户
+     *
      * @param model
      * @param id
      * @return
      */
     @GetMapping("/toUpdateUser")
-    public String toUpdateUser(Model model, @RequestParam(value="id") Integer id) {
+    public String toUpdateUser(Model model, @RequestParam(value = "id") Integer id) {
 
         //1、获取id，根据id查询user
         User user = userService.queryUserById(id);
@@ -132,6 +150,7 @@ public class UserController {
 
     /**
      * 更新用户
+     *
      * @param model
      * @param id
      * @param loginname
@@ -143,41 +162,42 @@ public class UserController {
      */
     @PostMapping("/updateUser")
     public String updateUser(Model model,
-                                @RequestParam(value="id",  required=false) Integer id,
-                                @RequestParam(value="loginname",  required=false) String loginname,
-                                @RequestParam(value="password",  required=false) String password,
-                                @RequestParam(value="status",  required=false) Integer status,
-                                @RequestParam(value="username",  required=false) String username,
-                                @RequestPart(value="filepart",  required=false) MultipartFile filepart) {
+                             @RequestParam(value = "id", required = false) Integer id,
+                             @RequestParam(value = "loginname", required = false) String loginname,
+                             @RequestParam(value = "password", required = false) String password,
+                             @RequestParam(value = "status", required = false) Integer status,
+                             @RequestParam(value = "username", required = false) String username,
+                             @RequestPart(value = "filepart", required = false) MultipartFile filepart) {
 
         String imgname = filepart.getOriginalFilename();
 
         User user = new User(id, username, password, loginname, status, imgname);
-        if(user.getId().equals(this.nowUser.getId())) {
+        if (user.getId().equals(this.nowUser.getId())) {
             this.nowUser = user;
         }
 
         boolean flag = userService.updataUser(user);
         model.addAttribute("NowUser", this.nowUser);
 
-        if(flag) {
+        if (flag) {
             return "redirect:queryUser.action";
         }
-        return "redirect:toUpdateUser.action?id="+id;
+        return "redirect:toUpdateUser.action?id=" + id;
 
     }
 
     /**
      * 删除用户
+     *
      * @param model
      * @param id
      * @return
      */
     @GetMapping("/deleteUser")
-    public String deleteUser(Model model, @RequestParam(value="id") Integer id) {
+    public String deleteUser(Model model, @RequestParam(value = "id") Integer id) {
 
         boolean flag = userService.deleteUser(id);
-        if(flag) {
+        if (flag) {
             return "redirect:queryUser.action";
         }
         return null;
@@ -190,12 +210,17 @@ public class UserController {
 
     @GetMapping("/queryDept")
     public String queryDept(Model model,
-                            @RequestParam(value="pn",  required=false, defaultValue = "1") Integer curPageNumber) {
+                            @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
 
         Page<Dept> page = deptService.queryDept(curPageNumber, pageSize);
 
         model.addAttribute("NowUser", this.nowUser);
-        model.addAttribute("deptList", page.getResult());
+        depts = deptService.queryDeptList();
+        jobs = jobService.queryJobList();
+        model.addAttribute("deptList", depts.getResult());
+        model.addAttribute("jobList", jobs.getResult());
+
+
         model.addAttribute("pageInfo", page.toPageInfo());
 
         return "deptIndex";
@@ -204,13 +229,14 @@ public class UserController {
 
     /**
      * 增加用户
+     *
      * @param model
      * @return
      */
     @PostMapping("/insertDept")
     public String insertDept(Model model,
-                             @RequestParam(value="name",  required=false) String name,
-                             @RequestParam(value="remark",  required=false) String remark) {
+                             @RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "remark", required = false) String remark) {
 
         Dept dept = new Dept(name, remark);
 
@@ -219,6 +245,10 @@ public class UserController {
 
         //3、作出响应--跳转页面
         if (flag) {//成功则跳转到首页
+
+            depts = deptService.queryDeptList();
+            model.addAttribute("deptList", depts.getResult());
+
             return "redirect:queryDept.action";
         }//失败跳转回到登录页面
         // TODO
@@ -228,12 +258,13 @@ public class UserController {
 
     /**
      * 根据id查询将要修改的用户
+     *
      * @param model
      * @param id
      * @return
      */
     @GetMapping("/toUpdateDept")
-    public String toUpdateDept(Model model, @RequestParam(value="id") Integer id) {
+    public String toUpdateDept(Model model, @RequestParam(value = "id") Integer id) {
 
         //1、获取id，根据id查询user
         Dept dept = deptService.queryDeptById(id);
@@ -246,39 +277,41 @@ public class UserController {
 
     /**
      * 更新用户
+     *
      * @param model
      * @param id
      * @return
      */
     @PostMapping("/updateDept")
     public String updateDept(Model model,
-                             @RequestParam(value="id",  required=false) Integer id,
-                             @RequestParam(value="name",  required=false) String name,
-                             @RequestParam(value="remark",  required=false) String remark) {
+                             @RequestParam(value = "id", required = false) Integer id,
+                             @RequestParam(value = "name", required = false) String name,
+                             @RequestParam(value = "remark", required = false) String remark) {
 
         Dept dept = new Dept(id, name, remark);
 
         boolean flag = deptService.updateDept(dept);
 
 
-        if(flag) {
+        if (flag) {
             return "redirect:queryDept.action";
         }
-        return "redirect:toUpdateDept.action?id="+id;
+        return "redirect:toUpdateDept.action?id=" + id;
 
     }
 
     /**
      * 删除用户
+     *
      * @param model
      * @param id
      * @return
      */
     @GetMapping("/deleteDept")
-    public String deleteDept(Model model, @RequestParam(value="id") Integer id) {
+    public String deleteDept(Model model, @RequestParam(value = "id") Integer id) {
 
         boolean flag = deptService.deleteDept(id);
-        if(flag) {
+        if (flag) {
             return "redirect:queryDept.action";
         }
         return null;
@@ -290,14 +323,19 @@ public class UserController {
 
     @GetMapping("/queryJob")
     public String queryJob(Model model,
-                           @RequestParam(value="pn",  required=false, defaultValue = "1") Integer curPageNumber) {
+                           @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
 
 
         Page<Job> page = jobService.queryJob(curPageNumber, pageSize);
 
 
         model.addAttribute("NowUser", this.nowUser);
-        model.addAttribute("jobList", page.getResult());
+        depts = deptService.queryDeptList();
+        jobs = jobService.queryJobList();
+        model.addAttribute("deptList", depts.getResult());
+        model.addAttribute("jobList", jobs.getResult());
+
+        // model.addAttribute("jobList", page.getResult());
         model.addAttribute("pageInfo", page.toPageInfo());
 
         return "jobIndex";
@@ -306,13 +344,14 @@ public class UserController {
 
     /**
      * 增加用户
+     *
      * @param model
      * @return
      */
     @PostMapping("/insertJob")
     public String insertJob(Model model,
-                            @RequestParam(value="name",  required=false) String name,
-                            @RequestParam(value="remark",  required=false) String remark) {
+                            @RequestParam(value = "name", required = false) String name,
+                            @RequestParam(value = "remark", required = false) String remark) {
 
         Job job = new Job(name, remark);
 
@@ -321,6 +360,8 @@ public class UserController {
 
         //3、作出响应--跳转页面
         if (flag) {//成功则跳转到首页
+            jobs = jobService.queryJobList();
+            model.addAttribute("jobList", jobs.getResult());
             return "redirect:queryJob.action";
         }//失败跳转回到登录页面
         // TODO
@@ -330,12 +371,13 @@ public class UserController {
 
     /**
      * 根据id查询将要修改的用户
+     *
      * @param model
      * @param id
      * @return
      */
     @GetMapping("/toUpdateJob")
-    public String toUpdateJob(Model model, @RequestParam(value="id") Integer id) {
+    public String toUpdateJob(Model model, @RequestParam(value = "id") Integer id) {
 
         //1、获取id，根据id查询user
         Job job = jobService.queryJobById(id);
@@ -348,46 +390,113 @@ public class UserController {
 
     /**
      * 更新用户
+     *
      * @param model
      * @param id
      * @return
      */
     @PostMapping("/updateJob")
     public String updateJob(Model model,
-                            @RequestParam(value="id",  required=false) Integer id,
-                            @RequestParam(value="name",  required=false) String name,
-                            @RequestParam(value="remark",  required=false) String remark) {
+                            @RequestParam(value = "id", required = false) Integer id,
+                            @RequestParam(value = "name", required = false) String name,
+                            @RequestParam(value = "remark", required = false) String remark) {
 
         Job job = new Job(id, name, remark);
 
         boolean flag = jobService.updateJob(job);
 
 
-        if(flag) {
+        if (flag) {
             return "redirect:queryJob.action";
         }
-        return "redirect:toUpdateJob.action?id="+id;
+        return "redirect:toUpdateJob.action?id=" + id;
 
     }
 
     /**
      * 删除用户
+     *
      * @param model
      * @param id
      * @return
      */
     @GetMapping("/deleteJob")
-    public String deleteJob(Model model, @RequestParam(value="id") Integer id) {
+    public String deleteJob(Model model, @RequestParam(value = "id") Integer id) {
 
         boolean flag = jobService.deleteJob(id);
-        if(flag) {
+        if (flag) {
             return "redirect:queryJob.action";
         }
         return null;
 
     }
 
+    // -----------------------------------------
+    @Autowired
+    private EmployeeService employeeService;
 
+    @GetMapping("/queryEmployee")
+    public String queryEmployee(Model model,
+                                // HttpServletRequest request,
+                                // HttpServletResponse response,
+                                @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
+
+        Page<Employee> page = employeeService.queryEmployee(curPageNumber, pageSize);
+        List<Employee> result = page.getResult();
+
+        model.addAttribute("employeeList", result);
+        model.addAttribute("pageInfo", page.toPageInfo());
+        model.addAttribute("Employeename", "test name");
+        model.addAttribute("deptSelectList", depts);
+
+        return "employeeIndex";
+
+    }
+
+
+    @RequestMapping("/insertEmployee")
+    public String insertEmployee(Model model,
+                                 @RequestParam(value = "name", required = false) String name,
+                                 @RequestParam(value = "password", required = false) String password,
+                                 @RequestParam(value = "cardId", required = false) String cardId,
+                                 @RequestParam(value = "phone", required = false) String phone,
+                                 @RequestParam(value = "email", required = false) String email,
+                                 @RequestParam(value = "sex", required = false) Integer sex,
+                                 @RequestParam(value = "deptId", required = false) Integer deptId,
+                                 @RequestParam(value = "jobId", required = false) Integer jobId,
+                                 @RequestPart(value = "filepart", required = false) MultipartFile filepart) {
+
+        String imgname = filepart.getOriginalFilename();
+        //创建user对象将数据进行封装
+        System.out.println(filepart);
+        try {
+            filepart.transferTo(new File(filepath + imgname));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Employee employee = new Employee();
+        employee.setName(name);
+        employee.setPassword(password);
+        employee.setCardId(cardId);
+        employee.setPhone(phone);
+        employee.setEmail(email);
+        employee.setSex(sex);
+        employee.setDeptId(deptId);
+        employee.setJobId(jobId);
+        employee.setImgname(imgname);
+
+        boolean flag = employeeService.addEmployee(employee);
+
+        //3、作出响应--跳转页面
+        if (flag) {//成功则跳转到首页
+
+            return "redirect:queryEmployee.action";
+        }//失败跳转回到登录页面
+        // TODO
+        return "login";
+    }
 
 
 }

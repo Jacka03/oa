@@ -23,7 +23,7 @@ public class DeptServiceImpl implements DeptService {
 
         PageHelper.startPage(curPageNumber, pageSize);
         Page<Dept> page = deptDao.findAll();
-        List<Dept> user1 = page.getResult();
+        // List<Dept> user1 = page.getResult();
         return page;
     }
 
@@ -45,5 +45,10 @@ public class DeptServiceImpl implements DeptService {
     @Override
     public boolean addDept(Dept dept) {
         return deptDao.add(dept);
+    }
+
+    @Override
+    public Page<Dept> queryDeptList() {
+        return deptDao.findAll();
     }
 }

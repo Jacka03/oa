@@ -45,4 +45,9 @@ public class JobServiceImpl implements JobService {
     public boolean addJob(Job job) {
         return jobDao.add(job) > 0;
     }
+
+    @Override
+    public Page<Job> queryJobList() {
+        return jobDao.findAll();
+    }
 }

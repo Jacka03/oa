@@ -8,4 +8,5 @@ public interface EmployeeDao {
 
     Page<Employee> findAll();
 
+    boolean insert(Employee employee);
 }

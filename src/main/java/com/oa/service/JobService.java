@@ -15,4 +15,6 @@ public interface JobService {
     boolean deleteJob(Integer id);
 
     boolean addJob(Job job);
+
+    Page<Job> queryJobList();
 }

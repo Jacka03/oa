@@ -20,6 +20,48 @@ public class Employee implements Serializable {
     private Date createDate;
     private String imgname;
 
+    private Dept dept;
+    private Job job;
+
+    public Employee() {
+    }
+
+    public Employee(Integer id, String password, Integer deptId, Integer jobId, String name, String cardId, String phone, String email, Integer sex, String party, String race, String education, Date createDate, String imgname) {
+        this.id = id;
+        this.password = password;
+        this.deptId = deptId;
+        this.jobId = jobId;
+        this.name = name;
+        this.cardId = cardId;
+        this.phone = phone;
+        this.email = email;
+        this.sex = sex;
+        this.party = party;
+        this.race = race;
+        this.education = education;
+        this.createDate = createDate;
+        this.imgname = imgname;
+    }
+
+    public Employee(Integer id, String password, Integer deptId, Integer jobId, String name, String cardId, String phone, String email, Integer sex, String party, String race, String education, Date createDate, String imgname, Dept dept, Job job) {
+        this.id = id;
+        this.password = password;
+        this.deptId = deptId;
+        this.jobId = jobId;
+        this.name = name;
+        this.cardId = cardId;
+        this.phone = phone;
+        this.email = email;
+        this.sex = sex;
+        this.party = party;
+        this.race = race;
+        this.education = education;
+        this.createDate = createDate;
+        this.imgname = imgname;
+        this.dept = dept;
+        this.job = job;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -37,7 +79,25 @@ public class Employee implements Serializable {
                 ", education='" + education + '\'' +
                 ", createDate=" + createDate +
                 ", imgname='" + imgname + '\'' +
+                ", dept=" + dept +
+                ", job=" + job +
                 '}';
+    }
+
+    public Dept getDept() {
+        return dept;
+    }
+
+    public void setDept(Dept dept) {
+        this.dept = dept;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
     }
 
     public Integer getId() {

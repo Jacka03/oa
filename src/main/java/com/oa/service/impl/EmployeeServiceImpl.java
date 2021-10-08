@@ -1,6 +1,7 @@
 package com.oa.service.impl;
 
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.oa.dao.EmployeeDao;
 import com.oa.pojo.Dept;
 import com.oa.pojo.Employee;
@@ -16,6 +17,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Page<Employee> queryEmployee(Integer curPageNumber, Integer pageSize) {
-        return employeeDao.findAll();
+
+        PageHelper.startPage(curPageNumber, pageSize);
+        Page<Employee> employees = employeeDao.findAll();
+        return employees;
+    }
+
+    @Override
+    public boolean addEmployee(Employee employee) {
+        return employeeDao.insert(employee);
     }
 }
