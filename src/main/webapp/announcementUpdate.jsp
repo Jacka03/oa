@@ -53,7 +53,7 @@
                                        class="form-control placeholder-no-fix">
                             </div>
                             <div class="modal-body">
-                                <p>create_time：</p>
+                                <p>createTime：</p>
                                 <input type="text" name="createTime" value="${announcement.createTime}"
                                        placeholder="请输入create_time" autocomplete="off"
                                        class="form-control placeholder-no-fix">

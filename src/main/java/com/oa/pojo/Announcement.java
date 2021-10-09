@@ -30,7 +30,7 @@ public class Announcement implements Serializable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", createTime=" + createTime +
+                ", createData=" + createTime +
                 ", uid=" + uid +
                 '}';
     }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.dao.DocumentDao">
+    <insert id="insert">
+        insert into document_inf(filename, remark, uploader, create_date)
+        value (#{filename}, #{remark}, #{uploader}, #{createDate})
+    </insert>
+    <update id="update">
+        update document_inf
+        <set>
+            <if test="filename != null">
+                filename = #{filename},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="uploader != null">
+                uploader = #{uploader},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDocument">
+        delete from document_inf where id = #{id}
+    </delete>
+
+
+    <select id="findAll" resultType="com.oa.pojo.Document">
+        select * from document_inf
+        <if test="filename != null and filename != ''">
+            where filename LIKE '%${filename}%'
+        </if>
+    </select>
+    <select id="queryDocumentById" resultType="com.oa.pojo.Document">
+        select * from document_inf where id = #{id}
+    </select>
+</mapper>

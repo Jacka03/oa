@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/")
@@ -606,7 +607,7 @@ public class UserController {
     }
 
     @GetMapping("/deleteAnnouncement")
-    public String deleteAnnouncement(Model model,  @RequestParam(value = "id") Integer id) {
+    public String deleteAnnouncement(Model model, @RequestParam(value = "id") Integer id) {
         boolean flag = announcementService.deleteAnnouncement(id);
         if (flag) {
             return "redirect:queryAnnouncement.action";
@@ -617,13 +618,13 @@ public class UserController {
 
     @PostMapping("/insertAnnouncement")
     public String insertAnnouncement(Model model,
-                             @RequestParam(value = "title", required = false) String title,
-                             @RequestParam(value = "content", required = false) String content,
-                             @RequestParam(value = "uid", required = false) Integer uid) {
+                                     @RequestParam(value = "title", required = false) String title,
+                                     @RequestParam(value = "content", required = false) String content,
+                                     @RequestParam(value = "uid", required = false) Integer uid) {
 
         User user = userService.queryUserById(uid);
 
-        if(user == null) {
+        if (user == null) {
             System.out.println("uid err");
             return null;
         }
@@ -660,14 +661,14 @@ public class UserController {
 
     @PostMapping("/updateAnnouncement")
     public String updateAnnouncement(Model model,
-                             @RequestParam(value = "id", required = false) Integer id,
-                             @RequestParam(value = "title", required = false) String title,
-                             @RequestParam(value = "content", required = false) String content,
-                             @RequestParam(value = "createTime", required = false) Date createTime,
-                             @RequestParam(value = "uid", required = false) Integer uid) {
+                                     @RequestParam(value = "id", required = false) Integer id,
+                                     @RequestParam(value = "title", required = false) String title,
+                                     @RequestParam(value = "content", required = false) String content,
+                                     @RequestParam(value = "createTime", required = false) Date createTime,
+                                     @RequestParam(value = "uid", required = false) Integer uid) {
         User user = userService.queryUserById(uid);
 
-        if(user == null) {
+        if (user == null) {
             System.out.println("uid err");
             return null;
         }
@@ -684,6 +685,132 @@ public class UserController {
 
     }
 
+
+    // ------------------------------------------------
+
+    @Autowired
+    private DocumentService documentService;
+
+    @GetMapping("/queryDocument")
+    public String queryDocument(Model model,
+                                @RequestParam(value = "filename", required = false) String filename,
+                                @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
+
+        // Page<User> page = userService.queryUser(curPageNumber, pageSize, name);
+
+        model.addAttribute("NowUser", this.nowUser);
+        depts = deptService.queryDeptList();
+        jobs = jobService.queryJobList();
+        model.addAttribute("deptList", depts.getResult());
+        model.addAttribute("jobList", jobs.getResult());
+
+
+        Page<Document> page = documentService.queryDocument(curPageNumber, pageSize, filename);
+        // for (Document document : page.getResult()) {
+        //     System.out.println(document);
+        // }
+
+        model.addAttribute("documentList", page.getResult());
+        model.addAttribute("pageInfo", page.toPageInfo());
+
+        return "documentIndex";
+    }
+
+    @GetMapping("/deleteDocument")
+    public String deleteDocument(Model model, @RequestParam(value = "id") Integer id) {
+
+        boolean flag = documentService.deleteDocument(id);
+        if (flag) {
+            return "redirect:queryDocument.action";
+        }
+        return null;
+    }
+
+    @PostMapping("/insertDocument")
+    public String insertDocument(Model model,
+                                 // @RequestParam(value = "filename", required = false) String filename,
+                                 @RequestParam(value = "remark", required = false) String remark,
+                                 @RequestParam(value = "uploader", required = false) String uploader,
+                                 @RequestPart(value = "filepart", required = false) MultipartFile filepart) {
+
+
+        String imgname = filepart.getOriginalFilename();
+
+        // System.out.println(imgname);
+        //创建user对象将数据进行封装
+        Document document = new Document();
+        document.setFilename(imgname);
+        document.setRemark(remark);
+        document.setUploader(uploader);
+        document.setCreateDate(new Date(System.currentTimeMillis()));
+        System.out.println(document);
+
+        boolean flag = false;
+        try {
+            filepart.transferTo(new File(filepath + imgname));
+
+            flag = documentService.addDocument(document);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //2、调用业务层方法实现功能
+        //3、作出响应--跳转页面
+        if (flag) {
+            //成功则跳转到首页
+            return "redirect:queryDocument.action";
+        }
+        //失败跳转回到登录页面
+        // TODO
+
+        return "error";
+    }
+
+    @GetMapping("/toUpdateDocument")
+    public String toUpdateDocument(Model model, @RequestParam(value = "id") Integer id) {
+
+        //1、获取id，根据id查询user
+        Document document = documentService.queryDocumentById(id);
+        //2、保存user对象数据保存在属性作用
+        model.addAttribute("document", document);
+        //3、跳转UserUpdate.jsp页面
+        System.out.println(document);
+
+        return "documentUpdate";
+    }
+
+    @PostMapping("/updateDocument")
+    public String updateDocument(Model model,
+                                 @RequestParam(value = "id", required = false) Integer id,
+                                 @RequestParam(value = "old_filename", required = false) String old_filename,
+                                 @RequestParam(value = "filename", required = false) String filename,
+                                 @RequestParam(value = "remark", required = false) String remark,
+                                 @RequestParam(value = "createDate", required = false) Date createDate,
+                                 @RequestParam(value = "uploader", required = false) String uploader) {
+
+        if (!Objects.equals(old_filename, filename)) {
+            String path = filepath + old_filename;
+            System.out.println(path);
+            File file = new File(path);
+            file.renameTo(new File(filepath+filename));
+        }
+
+        Document document = new Document();
+        document.setId(id);
+        document.setRemark(remark);
+        document.setFilename(filename);
+        document.setUploader(uploader);
+        document.setCreateDate(createDate);
+        System.out.println(document);
+
+        boolean flag = documentService.updateDocument(document);
+
+        if (flag) {
+            return "redirect:queryDocument.action";
+        }
+        return "redirect:toUpdateDocument.action?id=" + id;
+
+    }
 
 
 }

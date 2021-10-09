@@ -13,13 +13,6 @@
         delete from announcement_inf where id = #{id}
     </delete>
 
-
-    <!--<select id="findAll" resultType="com.oa.pojo.User">-->
-    <!--    select * from user_inf-->
-    <!--    <if test="name != null and name != ''">-->
-    <!--        where loginname LIKE '%${name}%' or username LIKE '%${name}%'-->
-    <!--    </if>-->
-    <!--</select>-->
     <select id="findAll" resultType="com.oa.pojo.Announcement">
         select * from announcement_inf
             <if test="title != null and title != ''">

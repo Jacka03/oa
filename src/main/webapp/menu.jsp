@@ -57,6 +57,14 @@
                             <li><a data-toggle="modal" href="#insertAnnouncementModal">添加公告</a></li>
                         </ul>
                     </li>
+                    <li class="sub-menu"><a href="javascript:;"> <i
+                            class="fa fa-tasks"></i> <span>文件模块</span>
+                    </a>
+                        <ul class="sub">
+                            <li><a href="queryDocument">文件信息</a></li>
+                            <li><a data-toggle="modal" href="#insertDocumentModal">添加文件</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <!-- sidebar menu end-->
             </div>
@@ -365,6 +373,53 @@
                                    autocomplete="off" class="form-control placeholder-no-fix">
                         </div>
 
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                            <button class="btn btn-theme" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <%-- document--%>
+        <form method="post" action="/oa/insertDocument" enctype="multipart/form-data">
+            <!-- 模态框Modal -->
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
+                 tabindex="-1" id="insertDocumentModal" class="modal fade">
+                <!-- 设置请求方式为method     类型 enctype="multipart/form-data"  -->
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;
+                            </button>
+                            <h4 class="modal-title">添加文件</h4>
+                        </div>
+<%--                        <div class="modal-body">--%>
+<%--                            <p>filename：</p>--%>
+<%--                            <input type="text" name="filename" placeholder="请输入filename"--%>
+<%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
+<%--                        </div>--%>
+
+                        <div class="modal-body">
+                            <p>remark：</p>
+                            <input type="text" name="remark" placeholder="请输入remark"
+                                   autocomplete="off" class="form-control placeholder-no-fix">
+                        </div>
+
+                        <div class="modal-body">
+                            <p>uploader：</p>
+                            <input type="text" name="uploader" placeholder="请输入uploader"
+                                   autocomplete="off" class="form-control placeholder-no-fix">
+                        </div>
+
+                        <div class="modal-body">
+                            <p>file：</p>
+                            <input type="file" name="filepart" autocomplete="off"
+                                   class="form-control placeholder-no-fix">
+                        </div>
                         <div class="modal-footer">
                             <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
                             <button class="btn btn-theme" type="submit">Submit</button>

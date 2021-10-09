@@ -7,7 +7,7 @@ public class Document implements Serializable {
     private Integer id;
     private String filename;
     private String remark;
-    private Date createTime;
+    private Date createDate;
     private String uploader;
 
     public Document() {
@@ -20,7 +20,7 @@ public class Document implements Serializable {
                 "id=" + id +
                 ", filename='" + filename + '\'' +
                 ", remark='" + remark + '\'' +
-                ", createTime=" + createTime +
+                ", createDate=" + createDate +
                 ", uploader='" + uploader + '\'' +
                 '}';
     }
@@ -49,12 +49,12 @@ public class Document implements Serializable {
         this.remark = remark;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public String getUploader() {
