@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%--<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -47,6 +47,14 @@
                         <ul class="sub">
                             <li><a href="queryJob">岗位信息</a></li>
                             <li><a data-toggle="modal" href="#insertJobModal">添加岗位</a></li>
+                        </ul>
+                    </li>
+                    <li class="sub-menu"><a href="javascript:;"> <i
+                            class="fa fa-tasks"></i> <span>公告模块</span>
+                    </a>
+                        <ul class="sub">
+                            <li><a href="queryAnnouncement">公告信息</a></li>
+                            <li><a data-toggle="modal" href="#insertAnnouncementModal">添加公告</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -154,28 +162,7 @@
                             </div>
                             <div class="col-md-1"></div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-1"></div>
 
-                            <div class="modal-body col-md-4">
-                                <p>政治面貌：</p>
-                                <input type="text" name="party" placeholder="请输入政治面貌"
-                                       autocomplete="off" class="form-control placeholder-no-fix">
-                            </div>
-
-                            <div class="modal-body col-md-3">
-                                <p>民族：</p>
-                                <input type="text" name="race" placeholder="请输入民族"
-                                       autocomplete="off" class="form-control placeholder-no-fix">
-                            </div>
-                            <div class="modal-body col-md-3">
-                                <p>学历：</p>
-                                <input type="text" name="education" placeholder="请输入学历"
-                                       autocomplete="off" class="form-control placeholder-no-fix">
-                            </div>
-
-                            <div class="col-md-1"></div>
-                        </div>
 
                         <div class="row">
                             <div class="col-md-1"></div>
@@ -204,6 +191,7 @@
                                     </c:forEach>
                                 </select>
                             </div>
+
                             <div class="modal-body col-md-5">
                                 <p>岗位：</p>
                                 <select name="jobId" class="form-control placeholder-no-fix">
@@ -216,7 +204,33 @@
                         </div>
                         <div class="row">
                             <div class="col-md-1"></div>
-                            <div class="modal-body col-md-10">
+
+                            <div class="modal-body col-md-5">
+                                <p>政治面貌：</p>
+                                <input type="text" name="party" placeholder="请输入政治面貌"
+                                       autocomplete="off" class="form-control placeholder-no-fix">
+                            </div>
+
+                            <div class="modal-body col-md-5">
+                                <p>民族：</p>
+                                <input type="text" name="race" placeholder="请输入民族"
+                                       autocomplete="off" class="form-control placeholder-no-fix">
+                            </div>
+
+                            <div class="col-md-1"></div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="modal-body col-md-5">
+                                <p>学历：</p>
+                                <input type="text" name="education" placeholder="请输入学历"
+                                       autocomplete="off" class="form-control placeholder-no-fix">
+                            </div>
+
+
+                            <div class="modal-body col-md-5">
                                 <p>头像：</p>
                                 <input type="file" name="filepart" autocomplete="off"
                                        class="form-control placeholder-no-fix">
@@ -302,6 +316,53 @@
                             <input type="text" name="remark" value="${job.remark}"
                                    placeholder="请输入remark" autocomplete="off"
                                    class="form-control placeholder-no-fix">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                            <button class="btn btn-theme" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <%-- announcement--%>
+        <form method="post" action="/oa/insertAnnouncement" enctype="multipart/form-data">
+            <!-- 模态框Modal -->
+            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
+                 tabindex="-1" id="insertAnnouncementModal" class="modal fade">
+                <!-- 设置请求方式为method     类型 enctype="multipart/form-data"  -->
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    aria-hidden="true">&times;
+                            </button>
+                            <h4 class="modal-title">添加公告</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>title：</p>
+                            <input type="text" name="title" placeholder="请输入title"
+                                   autocomplete="off" class="form-control placeholder-no-fix">
+
+                        </div>
+                        <div class="modal-body">
+                            <p>content：</p>
+                            <input type="text" name="content" placeholder="请输入content"
+                                   autocomplete="off" class="form-control placeholder-no-fix">
+
+                        </div>
+                        <div class="modal-body">
+                            <p>create_time：</p>
+                            <input type="text" name="create_time" placeholder="请输入create_time"
+                                   autocomplete="off" class="form-control placeholder-no-fix">
+                        </div>
+                        <div class="modal-body">
+                            <p>uid：</p>
+                            <input type="text" name="uid" placeholder="请输入uid"
+                                   autocomplete="off" class="form-control placeholder-no-fix">
                         </div>
 
                         <div class="modal-footer">

@@ -73,28 +73,7 @@
                         <div class="col-md-1"></div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-1"></div>
 
-                        <div class="modal-body col-md-4">
-                            <p>政治面貌：</p>
-                            <input type="text" name="party" placeholder="请输入政治面貌" value="${employee.party}"
-                                   autocomplete="off" class="form-control placeholder-no-fix">
-                        </div>
-
-                        <div class="modal-body col-md-3">
-                            <p>民族：</p>
-                            <input type="text" name="race" placeholder="请输入民族" value="${employee.race}"
-                                   autocomplete="off" class="form-control placeholder-no-fix">
-                        </div>
-                        <div class="modal-body col-md-3">
-                            <p>学历：</p>
-                            <input type="text" name="education" placeholder="请输入学历" value="${employee.education}"
-                                   autocomplete="off" class="form-control placeholder-no-fix">
-                        </div>
-
-                        <div class="col-md-1"></div>
-                    </div>
 
                     <div class="row">
                         <div class="col-md-1"></div>
@@ -146,9 +125,36 @@
                         </div>
                         <div class="col-md-1"></div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="modal-body col-md-10">
+
+                        <div class="modal-body col-md-5">
+                            <p>政治面貌：</p>
+                            <input type="text" name="party" placeholder="请输入政治面貌" value="${employee.party}"
+                                   autocomplete="off" class="form-control placeholder-no-fix">
+                        </div>
+
+                        <div class="modal-body col-md-5">
+                            <p>民族：</p>
+                            <input type="text" name="race" placeholder="请输入民族" value="${employee.race}"
+                                   autocomplete="off" class="form-control placeholder-no-fix">
+                        </div>
+
+                        <div class="col-md-1"></div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+
+                        <div class="modal-body col-md-5">
+                            <p>学历：</p>
+                            <input type="text" name="education" placeholder="请输入学历" value="${employee.education}"
+                                   autocomplete="off" class="form-control placeholder-no-fix">
+                        </div>
+
+                        <div class="modal-body col-md-5">
                             <p>头像：${employee.imgname}</p>
                             <input type="file" name="filepart" autocomplete="off"
                                    class="form-control placeholder-no-fix">

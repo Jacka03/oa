@@ -1,17 +1,10 @@
 package com.oa.controller;
 
 import com.github.pagehelper.Page;
-import com.oa.pojo.Dept;
-import com.oa.pojo.Employee;
-import com.oa.pojo.Job;
-import com.oa.pojo.User;
-import com.oa.service.DeptService;
-import com.oa.service.EmployeeService;
-import com.oa.service.JobService;
-import com.oa.service.UserService;
+import com.oa.pojo.*;
+import com.oa.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -29,13 +23,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     @Value("${pageSize}")
     private Integer pageSize;
 
     @Value("${filepath}")
     private String filepath;
 
+    // 保存当前登录用户的信息
     private User nowUser;
 
     private Page<Dept> depts;
@@ -73,6 +67,7 @@ public class UserController {
                             @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
 
         Page<User> page = userService.queryUser(curPageNumber, pageSize, name);
+
         model.addAttribute("NowUser", this.nowUser);
 
         depts = deptService.queryDeptList();
@@ -109,21 +104,26 @@ public class UserController {
         String imgname = filepart.getOriginalFilename();
         //创建user对象将数据进行封装
         User user = new User(username, password, loginname, status, imgname);
-        System.out.println(filepart);
+        // System.out.println(filepart);
+        boolean flag = false;
         try {
             filepart.transferTo(new File(filepath + imgname));
 
-        } catch (IOException e) {
+            flag = userService.addUser(user);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         //2、调用业务层方法实现功能
-        boolean flag = userService.addUser(user);
         //3、作出响应--跳转页面
-        if (flag) {//成功则跳转到首页
+        if (flag) {
+            //成功则跳转到首页
             return "redirect:queryUser.action";
-        }//失败跳转回到登录页面
+        }
+        //失败跳转回到登录页面
         // TODO
-        return "login";
+
+        return "error";
     }
 
 
@@ -560,10 +560,7 @@ public class UserController {
         // User user = new User(id, username, password, loginname, status, imgname);
         Employee employee = new Employee(id, name, password, cardId, phone, party, race, education, email, sex, deptId, jobId, imgname);
 
-        System.out.println(employee);
-        // if (user.getId().equals(this.nowUser.getId())) {
-        //     this.nowUser = user;
-        // }
+        // System.out.println(employee);
 
         boolean flag = employeeService.updateEmployee(employee);
         // model.addAttribute("NowUser", this.nowUser);
@@ -575,6 +572,117 @@ public class UserController {
 
     }
 
+
+    // -------------------------------------------
+
+    @Autowired
+    private AnnouncementService announcementService;
+
+    @GetMapping("/queryAnnouncement")
+    public String queryAnnouncement(Model model,
+                                    @RequestParam(value = "title", required = false, defaultValue = "") String title,
+                                    @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
+
+        // Page<Dept> page = deptService.queryDept(curPageNumber, pageSize);
+
+        Page<Announcement> page = announcementService.queryAnnouncement(curPageNumber, pageSize, title);
+        // for (Announcement announcement : page.getResult()) {
+        //     System.out.println(announcement);
+        // }
+
+        model.addAttribute("NowUser", this.nowUser);
+        depts = deptService.queryDeptList();
+        jobs = jobService.queryJobList();
+        model.addAttribute("deptList", depts.getResult());
+        model.addAttribute("jobList", jobs.getResult());
+
+        model.addAttribute("announcementList", page.getResult());
+        model.addAttribute("pageInfo", page.toPageInfo());
+
+
+        return "announcementIndex";
+
+        // return "index";
+    }
+
+    @GetMapping("/deleteAnnouncement")
+    public String deleteAnnouncement(Model model,  @RequestParam(value = "id") Integer id) {
+        boolean flag = announcementService.deleteAnnouncement(id);
+        if (flag) {
+            return "redirect:queryAnnouncement.action";
+        }
+
+        return null;
+    }
+
+    @PostMapping("/insertAnnouncement")
+    public String insertAnnouncement(Model model,
+                             @RequestParam(value = "title", required = false) String title,
+                             @RequestParam(value = "content", required = false) String content,
+                             @RequestParam(value = "uid", required = false) Integer uid) {
+
+        User user = userService.queryUserById(uid);
+
+        if(user == null) {
+            System.out.println("uid err");
+            return null;
+        }
+
+        Announcement announcement = new Announcement();
+        announcement.setTitle(title);
+        announcement.setContent(content);
+        announcement.setCreateTime(new Date(System.currentTimeMillis()));
+        announcement.setUid(uid);
+        boolean flag = announcementService.add(announcement);
+
+        if (flag) {
+            //成功则跳转到首页
+            return "redirect:queryAnnouncement.action";
+        }
+        //失败跳转回到登录页面
+        // TODO
+
+        return "error";
+    }
+
+    @GetMapping("/toUpdateAnnouncement")
+    public String toUpdateAnnouncement(Model model, @RequestParam(value = "id") Integer id) {
+
+        //1、获取id，根据id查询user
+        Announcement announcement = announcementService.queryAnnouncementById(id);
+        //2、保存user对象数据保存在属性作用
+        model.addAttribute("announcement", announcement);
+        //3、跳转UserUpdate.jsp页面
+        System.out.println(announcement);
+
+        return "announcementUpdate";
+    }
+
+    @PostMapping("/updateAnnouncement")
+    public String updateAnnouncement(Model model,
+                             @RequestParam(value = "id", required = false) Integer id,
+                             @RequestParam(value = "title", required = false) String title,
+                             @RequestParam(value = "content", required = false) String content,
+                             @RequestParam(value = "createTime", required = false) Date createTime,
+                             @RequestParam(value = "uid", required = false) Integer uid) {
+        User user = userService.queryUserById(uid);
+
+        if(user == null) {
+            System.out.println("uid err");
+            return null;
+        }
+
+        Announcement announcement = new Announcement(id, title, content, createTime, uid);
+
+
+        boolean flag = announcementService.updateAnnouncement(announcement);
+
+        if (flag) {
+            return "redirect:queryAnnouncement.action";
+        }
+        return "redirect:toUpdateAnnouncement.action?id=" + id;
+
+    }
 
 
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oa.dao.AnnouncementDao">
+
+    <insert id="insert">
+        insert into announcement_inf(title, content, create_time, uid) value(#{title}, #{content}, #{createTime}, #{uid})
+
+    </insert>
+    <update id="update">
+        update announcement_inf set title = #{title}, content = #{content}, create_time = #{createTime}, uid = #{uid} where id = #{id}
+    </update>
+    <delete id="deleteAnnouncementById">
+        delete from announcement_inf where id = #{id}
+    </delete>
+
+
+    <!--<select id="findAll" resultType="com.oa.pojo.User">-->
+    <!--    select * from user_inf-->
+    <!--    <if test="name != null and name != ''">-->
+    <!--        where loginname LIKE '%${name}%' or username LIKE '%${name}%'-->
+    <!--    </if>-->
+    <!--</select>-->
+    <select id="findAll" resultType="com.oa.pojo.Announcement">
+        select * from announcement_inf
+            <if test="title != null and title != ''">
+                 where title LIKE '%${title}%'
+            </if>
+
+    </select>
+    <select id="queryAnnouncementById" resultType="com.oa.pojo.Announcement">
+        select * from announcement_inf where id = #{id}
+    </select>
+</mapper>
