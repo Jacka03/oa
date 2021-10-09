@@ -176,7 +176,7 @@ public class UserController {
             this.nowUser = user;
         }
 
-        boolean flag = userService.updataUser(user);
+        boolean flag = userService.updateUser(user);
         model.addAttribute("NowUser", this.nowUser);
 
         if (flag) {
@@ -220,7 +220,7 @@ public class UserController {
         model.addAttribute("deptList", depts.getResult());
         model.addAttribute("jobList", jobs.getResult());
 
-
+        model.addAttribute("deptResult", page.getResult());
         model.addAttribute("pageInfo", page.toPageInfo());
 
         return "deptIndex";
@@ -335,7 +335,7 @@ public class UserController {
         model.addAttribute("deptList", depts.getResult());
         model.addAttribute("jobList", jobs.getResult());
 
-        // model.addAttribute("jobList", page.getResult());
+        model.addAttribute("jobResult", page.getResult());
         model.addAttribute("pageInfo", page.toPageInfo());
 
         return "jobIndex";
@@ -439,22 +439,27 @@ public class UserController {
     public String queryEmployee(Model model,
                                 // HttpServletRequest request,
                                 // HttpServletResponse response,
-                                @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
+                                @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber,
+                                @RequestParam(value = "name", required = false) String name,
+                                @RequestParam(value = "deptId", required = false, defaultValue = "0") Integer deptId) {
 
-        Page<Employee> page = employeeService.queryEmployee(curPageNumber, pageSize);
+        Page<Employee> page = employeeService.queryEmployee(curPageNumber, pageSize, name, deptId);
         List<Employee> result = page.getResult();
+
+        model.addAttribute("NowUser", this.nowUser);
 
         model.addAttribute("employeeList", result);
         model.addAttribute("pageInfo", page.toPageInfo());
         model.addAttribute("Employeename", "test name");
-        model.addAttribute("deptSelectList", depts);
+        model.addAttribute("deptList", depts.getResult());
+        model.addAttribute("jobList", jobs.getResult());
 
         return "employeeIndex";
 
     }
 
 
-    @RequestMapping("/insertEmployee")
+    @PostMapping("/insertEmployee")
     public String insertEmployee(Model model,
                                  @RequestParam(value = "name", required = false) String name,
                                  @RequestParam(value = "password", required = false) String password,
@@ -464,6 +469,9 @@ public class UserController {
                                  @RequestParam(value = "sex", required = false) Integer sex,
                                  @RequestParam(value = "deptId", required = false) Integer deptId,
                                  @RequestParam(value = "jobId", required = false) Integer jobId,
+                                 @RequestParam(value = "party", required = false) String party,
+                                 @RequestParam(value = "race", required = false) String race,
+                                 @RequestParam(value = "education", required = false) String education,
                                  @RequestPart(value = "filepart", required = false) MultipartFile filepart) {
 
         String imgname = filepart.getOriginalFilename();
@@ -486,6 +494,9 @@ public class UserController {
         employee.setDeptId(deptId);
         employee.setJobId(jobId);
         employee.setImgname(imgname);
+        employee.setParty(party);
+        employee.setRace(race);
+        employee.setEducation(education);
 
         boolean flag = employeeService.addEmployee(employee);
 
@@ -497,6 +508,74 @@ public class UserController {
         // TODO
         return "login";
     }
+
+    @GetMapping("/deleteEmployee")
+    public String deleteEmployee(Model model, @RequestParam(value = "id") Integer id) {
+
+        boolean flag = employeeService.deleteEmployee(id);
+
+        if (flag) {
+            System.out.println("delete success");
+            return "redirect:queryEmployee.action";
+        }
+        System.out.println("delete false");
+        return null;
+    }
+
+    @GetMapping("/toUpdateEmployee")
+    public String toUpdateEmployee(Model model, @RequestParam(value = "id") Integer id) {
+
+        //1、获取id，根据id查询user
+        Employee employee = employeeService.queryEmployeeById(id);
+        //2、保存user对象数据保存在属性作用
+        model.addAttribute("employee", employee);
+
+        model.addAttribute("deptList", depts.getResult());
+        model.addAttribute("jobList", jobs.getResult());
+        //3、跳转UserUpdate.jsp页面
+        System.out.println(employee);
+
+        return "employeeUpdate";
+    }
+
+
+    @PostMapping("/updateEmployee")
+    public String updateEmployee(Model model,
+                                 @RequestParam(value = "id", required = false) Integer id,
+                                 @RequestParam(value = "name", required = false) String name,
+                                 @RequestParam(value = "password", required = false) String password,
+                                 @RequestParam(value = "cardId", required = false) String cardId,
+                                 @RequestParam(value = "phone", required = false) String phone,
+                                 @RequestParam(value = "party", required = false) String party,
+                                 @RequestParam(value = "race", required = false) String race,
+                                 @RequestParam(value = "education", required = false) String education,
+                                 @RequestParam(value = "email", required = false) String email,
+                                 @RequestParam(value = "sex", required = false) Integer sex,
+                                 @RequestParam(value = "deptId", required = false) Integer deptId,
+                                 @RequestParam(value = "jobId", required = false) Integer jobId,
+                                 @RequestPart(value = "filepart", required = false) MultipartFile filepart) {
+
+        String imgname = filepart.getOriginalFilename();
+
+        // User user = new User(id, username, password, loginname, status, imgname);
+        Employee employee = new Employee(id, name, password, cardId, phone, party, race, education, email, sex, deptId, jobId, imgname);
+
+        System.out.println(employee);
+        // if (user.getId().equals(this.nowUser.getId())) {
+        //     this.nowUser = user;
+        // }
+
+        boolean flag = employeeService.updateEmployee(employee);
+        // model.addAttribute("NowUser", this.nowUser);
+
+        if (flag) {
+            return "redirect:queryEmployee.action";
+        }
+        return "redirect:toUpdateEmployee.action?id=" + id;
+
+    }
+
+
 
 
 }

@@ -64,6 +64,7 @@
                 <!-- 设置请求方式为method     类型 enctype="multipart/form-data"  -->
                 <div class="modal-dialog">
                     <div class="modal-content">
+
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"
                                     aria-hidden="true">&times;
@@ -151,6 +152,28 @@
                                 <input type="text" name="phone" placeholder="请输入手机号码"
                                        autocomplete="off" class="form-control placeholder-no-fix">
                             </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1"></div>
+
+                            <div class="modal-body col-md-4">
+                                <p>政治面貌：</p>
+                                <input type="text" name="party" placeholder="请输入政治面貌"
+                                       autocomplete="off" class="form-control placeholder-no-fix">
+                            </div>
+
+                            <div class="modal-body col-md-3">
+                                <p>民族：</p>
+                                <input type="text" name="race" placeholder="请输入民族"
+                                       autocomplete="off" class="form-control placeholder-no-fix">
+                            </div>
+                            <div class="modal-body col-md-3">
+                                <p>学历：</p>
+                                <input type="text" name="education" placeholder="请输入学历"
+                                       autocomplete="off" class="form-control placeholder-no-fix">
+                            </div>
+
                             <div class="col-md-1"></div>
                         </div>
 

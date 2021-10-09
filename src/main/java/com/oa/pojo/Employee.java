@@ -20,10 +20,32 @@ public class Employee implements Serializable {
     private Date createDate;
     private String imgname;
 
+    private String deptName;
+    private String jobName;
+
     private Dept dept;
     private Job job;
 
     public Employee() {
+    }
+
+    public Employee(Integer id, String password, Integer deptId, Integer jobId, String name, String cardId, String phone, String email, Integer sex, String party, String race, String education, Date createDate, String imgname, String deptName, String jobName) {
+        this.id = id;
+        this.password = password;
+        this.deptId = deptId;
+        this.jobId = jobId;
+        this.name = name;
+        this.cardId = cardId;
+        this.phone = phone;
+        this.email = email;
+        this.sex = sex;
+        this.party = party;
+        this.race = race;
+        this.education = education;
+        this.createDate = createDate;
+        this.imgname = imgname;
+        this.deptName = deptName;
+        this.jobName = jobName;
     }
 
     public Employee(Integer id, String password, Integer deptId, Integer jobId, String name, String cardId, String phone, String email, Integer sex, String party, String race, String education, Date createDate, String imgname) {
@@ -60,6 +82,22 @@ public class Employee implements Serializable {
         this.imgname = imgname;
         this.dept = dept;
         this.job = job;
+    }
+
+    public Employee(Integer id, String name, String password, String cardId, String phone, String party, String race, String education, String email, Integer sex, Integer deptId, Integer jobId, String imgname) {
+        this.id = id;
+        this.password = password;
+        this.deptId = deptId;
+        this.jobId = jobId;
+        this.name = name;
+        this.cardId = cardId;
+        this.phone = phone;
+        this.email = email;
+        this.sex = sex;
+        this.party = party;
+        this.race = race;
+        this.education = education;
+        this.imgname = imgname;
     }
 
     @Override

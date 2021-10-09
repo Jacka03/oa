@@ -242,7 +242,7 @@
                                             <tbody>
 
                                             <!-- 使用JSTL中foreach进行遍历 -->
-                                            <c:forEach var="Item" items="${deptList}">
+                                            <c:forEach var="Item" items="${deptResult}">
                                                 <tr>
                                                     <td><a href="basic_table.html#">${Item.id}</a></td>
                                                     <td class="hidden-phone">${Item.name}</td>

@@ -16,15 +16,30 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeDao employeeDao;
 
     @Override
-    public Page<Employee> queryEmployee(Integer curPageNumber, Integer pageSize) {
+    public Page<Employee> queryEmployee(Integer curPageNumber, Integer pageSize, String name, Integer deptId) {
 
         PageHelper.startPage(curPageNumber, pageSize);
-        Page<Employee> employees = employeeDao.findAll();
+        Page<Employee> employees = employeeDao.findAll(name, deptId);
         return employees;
     }
 
     @Override
     public boolean addEmployee(Employee employee) {
         return employeeDao.insert(employee);
+    }
+
+    @Override
+    public boolean deleteEmployee(Integer id) {
+        return employeeDao.delete(id);
+    }
+
+    @Override
+    public Employee queryEmployeeById(Integer id) {
+        return employeeDao.queryEmployeeById(id);
+    }
+
+    @Override
+    public boolean updateEmployee(Employee employee) {
+        return employeeDao.update(employee) > 0;
     }
 }

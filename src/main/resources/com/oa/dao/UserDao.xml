@@ -45,7 +45,7 @@
     <select id="findAll" resultType="com.oa.pojo.User">
         select * from user_inf
         <if test="name != null and name != ''">
-            where loginname = #{name} or username = #{name}
+            where loginname LIKE '%${name}%' or username LIKE '%${name}%'
         </if>
     </select>
 </mapper>

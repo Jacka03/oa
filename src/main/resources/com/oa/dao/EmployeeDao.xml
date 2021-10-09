@@ -20,39 +20,98 @@
         <result property="imgname" column="imgname"/>
 
         <association property="dept" javaType="com.oa.pojo.Dept">
-            <id property="id" column="id"/>
-            <result property="name" column="name"/>
-            <result property="remark" column="remark"/>
+            <id property="id" column="d_id"/>
+            <result property="name" column="d_name"/>
+            <result property="remark" column="d_remark"/>
         </association>
 
         <association property="job" javaType="com.oa.pojo.Job">
-            <id property="id" column="id"/>
-            <result property="name" column="name"/>
-            <result property="remark" column="remark"/>
+            <id property="id" column="j_id"/>
+            <result property="name" column="j_name"/>
+            <result property="remark" column="j_remark"/>
         </association>
     </resultMap>
 
+
     <select id="findAll" resultMap="employeeMap">
-        select *
+        select e.*, d.name d_name, d.id d_id, d.remark d_remark, j.name j_name, j.id j_id, j.remark j_remark
         from employee_inf e
-        INNER  join dept_inf d on e.dept_id = d.id
-        INNER  join job_inf j on e.job_id = j.id
+        INNER  join dept_inf d
+            on e.dept_id = d.id
+        INNER  join job_inf j
+            on e.job_id = j.id
+        <where>
+            <if test="name != null and name != ''">
+                AND e.name LIKE '%${name}%'
+            </if>
+            <if test="deptId != 0">
+                AND e.dept_id = #{deptId}
+            </if>
+        </where>
+
     </select>
 
-    <!--employee.setName(name);-->
-    <!--employee.setPassword(password);-->
-    <!--employee.setCardId(cardId);-->
-    <!--employee.setPhone(phone);-->
-    <!--employee.setEmail(email);-->
-    <!--employee.setSex(sex);-->
-    <!--employee.setDeptId(deptId);-->
-    <!--employee.setJobId(jobId);-->
-    <!--employee.setImgname(imgage);-->
-
-
     <insert id="insert" parameterType="com.oa.pojo.Employee">
-        insert into employee_inf(name, password, card_id, phone, email, sex, dept_id, job_id, imgname)
-        values(#{name}, #{password}, #{cardId}, #{phone}, #{email}, #{sex}, #{deptId}, #{jobId}, #{imgname})
+        insert into employee_inf(name, password, card_id, phone, email, sex, dept_id, job_id, imgname, party, race, education)
+        values(#{name}, #{password}, #{cardId}, #{phone}, #{email}, #{sex}, #{deptId}, #{jobId}, #{imgname}, #{party}, #{race}, #{education})
     </insert>
+
+    <delete id="delete">
+        delete from employee_inf where id = #{id}
+    </delete>
+
+    <select id="queryEmployeeById" resultMap="employeeMap">
+        select e.*, d.name d_name, d.id d_id, d.remark d_remark, j.name j_name, j.id j_id, j.remark j_remark
+        from employee_inf e
+            INNER  join dept_inf d on e.dept_id = d.id
+            INNER  join job_inf j on e.job_id = j.id
+        where e.id = #{id}
+
+    </select>
+
+
+    <update id="update" parameterType="com.oa.pojo.Employee">
+        update employee_inf
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="cardId != null">
+                card_id = #{cardId},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="party != null">
+                party = #{party},
+            </if>
+            <if test="race != null">
+                race = #{race},
+            </if>
+            <if test="education != null">
+                education = #{education},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId},
+            </if>
+            <if test="jobId != null">
+                job_id = #{jobId},
+            </if>
+            <if test="imgname != null">
+                imgname = #{imgname},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
 
 </mapper>

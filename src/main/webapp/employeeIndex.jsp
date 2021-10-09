@@ -233,11 +233,9 @@
                                       action="queryEmployee">
                                     <input id="page" name="pn" type="hidden" value="1"/>
                                     <div class="form-group">
-                                        <label class="sr-only" for="exampleInputEmail2">Email
-                                            address</label> <input type="text" class="form-control"
-                                                                   id="exampleInputEmail2" placeholder="Employee Name"
-                                                                   name="search"
-                                                                   value="${Employeename}">
+                                        <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                                        <input type="text" class="form-control"
+                                               id="exampleInputEmail2" placeholder="Employee Name" name="name">
                                     </div>
                                     <select name="deptId" class="form-control">
                                         <option value="0">部门</option>
@@ -294,11 +292,11 @@
                                                 <td>
                                                     <button class="btn btn-primary btn-xs">
                                                         <a class="fa fa-pencil" style="color: white;"
-                                                           href="toUpdateEmp?Update_Empid=${employeeItem.id}"></a>
+                                                           href="toUpdateEmployee?id=${employeeItem.id}"></a>
                                                     </button>
                                                     <button class="btn btn-danger btn-xs" onclick="">
                                                         <a class="fa fa-trash-o" style="color: white;"
-                                                           href="DeleteEmp?Delete_Empid=${employeeItem.id}"></a>
+                                                           href="deleteEmployee?id=${employeeItem.id}"></a>
                                                     </button>
                                                 </td>
                                             </c:if>
@@ -318,34 +316,39 @@
                                 <nav aria-label="Page navigation example"
                                      style="margin-left: 330px;">
                                     <ul class="pagination">
-                                        <li class="page-item"><a class="page-link" href="#">【${pageInfo.pageNum}/${pageInfo.pages}，共${pageInfo.total}条记录】
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="#">【${pageInfo.pageNum}/${pageInfo.pages}，共${pageInfo.total}条记录】
                                         </a></li>
                                         <li class="page-item"><a class="page-link"
                                                                  href="javascript:jumpPage(1)">首页</a></li>
                                         <c:if test="${pageInfo.prePage!=0}">
                                             <li class="page-item"><a class="page-link"
-                                                                     href="javascript:jumpPage(${pageInfo.prePage})">上一页</a></li>
+                                                                     href="javascript:jumpPage(${pageInfo.prePage})">上一页</a>
+                                            </li>
                                         </c:if>
                                         <li class="page-item"><a class="page-link"
-                                                                 href="javascript:jumpPage(${pageInfo.pageNum})">${pageInfo.pageNum}</a></li>
+                                                                 href="javascript:jumpPage(${pageInfo.pageNum})">${pageInfo.pageNum}</a>
+                                        </li>
                                         <c:if test="${pageInfo.nextPage!=0}">
                                             <li class="page-item"><a class="page-link"
-                                                                     href="javascript:jumpPage(${pageInfo.nextPage})">下一页</a></li>
+                                                                     href="javascript:jumpPage(${pageInfo.nextPage})">下一页</a>
+                                            </li>
                                         </c:if>
                                         <li class="page-item"><a class="page-link"
-                                                                 href="javascript:jumpPage(${pageInfo.pages})">尾页</a></li>
+                                                                 href="javascript:jumpPage(${pageInfo.pages})">尾页</a>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>
                             <!-- 分页html标签 -->
 
                             <!-- 分页提交的请求表单 -->
-<%--                            <form class="search" id="form_query" action="queryUser">--%>
-<%--                                <div class="input-group">--%>
-<%--                                    <!-- 隐藏域的页码  不显示 -->--%>
-<%--                                    <input id="page" name="pn" type="hidden" value="1"/>--%>
-<%--                                </div>--%>
-<%--                            </form>--%>
+                            <%--                            <form class="search" id="form_query" action="queryUser">--%>
+                            <%--                                <div class="input-group">--%>
+                            <%--                                    <!-- 隐藏域的页码  不显示 -->--%>
+                            <%--                                    <input id="page" name="pn" type="hidden" value="1"/>--%>
+                            <%--                                </div>--%>
+                            <%--                            </form>--%>
                             <!-- 分页提交的请求表单 -->
 
                         </div>
@@ -462,7 +465,7 @@
 
             //删除的操作
             function deleteUser(id) {//入参跳转的页码
-                $.post('deleteUser', {"id": id}, function (result) {
+                $.post('deleteEmployee', {"id": id}, function (result) {
                     if (result == true) {
                         alert('删除成功');
                         window.location.reload();
