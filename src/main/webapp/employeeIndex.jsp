@@ -241,7 +241,7 @@
                                     </div>
                                     <select name="deptId" class="form-control">
                                         <option value="0">部门</option>
-                                        <c:forEach items="${deptSelectList}" var="deptSelectItem">
+                                        <c:forEach items="${deptList}" var="deptSelectItem">
                                             <option value="${deptSelectItem.id}">${deptSelectItem.name}</option>
                                         </c:forEach>
                                     </select>
