@@ -8,9 +8,17 @@
     </insert>
     <update id="update">
         update announcement_inf
-        set title       = #{title},
-            content     = #{content},
---             uid         = #{uid}
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
+        </set>
         where id = #{id}
     </update>
     <delete id="deleteAnnouncementById">

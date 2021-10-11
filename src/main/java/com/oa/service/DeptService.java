@@ -6,7 +6,7 @@ import com.oa.pojo.Dept;
 
 public interface DeptService {
 
-    Page<Dept> queryDept(Integer curPageNumber, Integer pageSize);
+    Page<Dept> queryDept(Integer curPageNumber, Integer pageSize, String name);
 
     Dept queryDeptById(Integer id);
 

@@ -6,7 +6,7 @@ import com.oa.pojo.Job;
 
 public interface JobDao {
 
-    Page<Job> findAll();
+    Page<Job> findAll(String name);
 
     Job queryJobById(Integer id);
 

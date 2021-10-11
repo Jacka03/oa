@@ -19,10 +19,10 @@ public class JobServiceImpl implements JobService {
     private JobDao jobDao;
 
     @Override
-    public Page<Job> queryJob(Integer curPageNumber, Integer pageSize) {
+    public Page<Job> queryJob(Integer curPageNumber, Integer pageSize, String name) {
 
         PageHelper.startPage(curPageNumber, pageSize);
-        Page<Job> page = jobDao.findAll();
+        Page<Job> page = jobDao.findAll(name);
         return page;
     }
 
@@ -48,6 +48,6 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Page<Job> queryJobList() {
-        return jobDao.findAll();
+        return jobDao.findAll("");
     }
 }

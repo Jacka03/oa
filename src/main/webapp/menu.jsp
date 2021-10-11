@@ -282,7 +282,7 @@
                             <input type="hidden" name="id" value="${dept.id}"/>
                             <input
                                     type="text" name="name" value="${dept.name}"
-                                    placeholder="请输入部门名" autocomplete="off"
+                                    placeholder="请输入岗位名" autocomplete="off"
                                     class="form-control placeholder-no-fix">
 
                         </div>

@@ -6,7 +6,7 @@ import com.oa.pojo.Job;
 
 public interface JobService {
 
-    Page<Job> queryJob(Integer curPageNumber, Integer pageSize);
+    Page<Job> queryJob(Integer curPageNumber, Integer pageSize, String name);
 
     Job queryJobById(Integer id);
 

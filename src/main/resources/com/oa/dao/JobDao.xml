@@ -24,6 +24,9 @@
     <select id="findAll" resultType="com.oa.pojo.Job">
         select *
         from job_inf
+        <if test="name != null and name != ''">
+            where name LIKE '%${name}%' or remark LIKE '%${name}%'
+        </if>
     </select>
 
     <select id="queryJobById" resultType="com.oa.pojo.Job">

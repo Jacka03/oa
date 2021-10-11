@@ -42,7 +42,7 @@
                     <div class="modal-body">
                         <p>文件名：</p>
                         <input type="hidden" name="id" value="${document.id}"/>
-                        <input type="hidden" name="old_filename" value="${document.filename}"/>
+                        <input type="hidden" name="oldFilename" value="${document.filename}"/>
                         <input
                                 type="text" name="filename" value="${document.filename}"
                                 placeholder="请输入filename" autocomplete="off"

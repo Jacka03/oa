@@ -19,10 +19,10 @@ public class DeptServiceImpl implements DeptService {
     private DeptDao deptDao;
 
     @Override
-    public Page<Dept> queryDept(Integer curPageNumber, Integer pageSize) {
+    public Page<Dept> queryDept(Integer curPageNumber, Integer pageSize, String name) {
 
         PageHelper.startPage(curPageNumber, pageSize);
-        Page<Dept> page = deptDao.findAll();
+        Page<Dept> page = deptDao.findAll(name);
         // List<Dept> user1 = page.getResult();
         return page;
     }
@@ -49,6 +49,6 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public Page<Dept> queryDeptList() {
-        return deptDao.findAll();
+        return deptDao.findAll("");
     }
 }

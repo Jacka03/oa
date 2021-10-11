@@ -223,6 +223,23 @@
                     <div class="row">
                         <!-- /col-lg-9 END SECTION MIDDLE -->
                         <div class="col-lg-9 main-chart">
+                            <!-- input -->
+                            <div style="margin-top: 45px;">
+                                <h4 class="mb">
+                                    <i class="fa fa-angle-right"></i> Inline Form
+                                </h4>
+                                <form class="form-inline" role="form"
+                                      action="queryDept">
+                                    <%--<input id="page" name="pageNo" type="hidden" value="1" />--%>
+                                    <div class="form-group">
+                                        <label class="sr-only">Email
+                                            address</label> <input type="text" class="form-control"
+                                                                   placeholder="dept Name" name="name">
+                                    </div>
+                                    <button type="submit" class="btn btn-theme">Submit</button>
+                                </form>
+                            </div>
+                            <!-- input -->
 
                             <div class="row mt">
                                 <div class="col-md-12">

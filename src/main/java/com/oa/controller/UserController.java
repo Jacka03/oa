@@ -216,9 +216,11 @@ public class UserController {
 
     @GetMapping("/queryDept")
     public String queryDept(Model model,
+                            @RequestParam(value = "name", required = false) String name,
                             @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
 
-        Page<Dept> page = deptService.queryDept(curPageNumber, pageSize);
+        Page<Dept> page = deptService.queryDept(curPageNumber, pageSize, name);
+        // System.out.println(name);
 
         model.addAttribute("NowUser", this.nowUser);
         depts = deptService.queryDeptList();
@@ -329,10 +331,11 @@ public class UserController {
 
     @GetMapping("/queryJob")
     public String queryJob(Model model,
+                           @RequestParam(value = "name", required = false) String name,
                            @RequestParam(value = "pn", required = false, defaultValue = "1") Integer curPageNumber) {
 
 
-        Page<Job> page = jobService.queryJob(curPageNumber, pageSize);
+        Page<Job> page = jobService.queryJob(curPageNumber, pageSize, name);
 
 
         model.addAttribute("NowUser", this.nowUser);
@@ -627,15 +630,6 @@ public class UserController {
                                      @RequestParam(value = "content", required = false) String content,
                                      @RequestParam(value = "uid", required = false) Integer uid) {
 
-        // User user = userService.queryUserById(uid);
-        //
-        // if (user == null) {
-        //     System.out.println("uid err");
-        //     return null;
-        // }
-        // System.out.println(uid);
-        // System.out.println(this.nowUser.getId());
-
         Announcement announcement = new Announcement();
         announcement.setTitle(title);
         announcement.setContent(content);
@@ -668,6 +662,7 @@ public class UserController {
 
     @PostMapping("/updateAnnouncement")
     public String updateAnnouncement(Model model,
+                                     @RequestParam(value = "id", required = false) Integer id,
                                      @RequestParam(value = "uid", required = false) Integer uid,
                                      @RequestParam(value = "title", required = false) String title,
                                      @RequestParam(value = "content", required = false) String content) {
@@ -682,7 +677,9 @@ public class UserController {
         announcement.setTitle(title);
         announcement.setContent(content);
         announcement.setUid(uid);
+        announcement.setId(id);
 
+        System.out.println(announcement);
 
         boolean flag = announcementService.updateAnnouncement(announcement);
 
@@ -805,10 +802,14 @@ public class UserController {
                                  @RequestParam(value = "remark", required = false) String remark) {
 
         if (!Objects.equals(oldFilename, filename)) {
+            // System.out.println(filename);
             String path = filepath + oldFilename;
             // System.out.println(path);
             File file = new File(path);
-            file.renameTo(new File(filepath+filename));
+            boolean b = file.renameTo(new File(filepath + filename));
+            if(!b){
+                return null;
+            }
         }
 
         Document document = new Document();

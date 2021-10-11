@@ -23,6 +23,9 @@
     <select id="findAll" resultType="com.oa.pojo.Dept">
         select *
         from dept_inf
+        <if test="name != null and name != ''">
+            where name LIKE '%${name}%' or remark LIKE '%${name}%'
+        </if>
     </select>
 
     <select id="queryDeptById" resultType="com.oa.pojo.Dept">

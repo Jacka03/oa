@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface DeptDao {
 
-    Page<Dept> findAll();
+    Page<Dept> findAll(String name);
 
     Dept queryDeptById(Integer id);
 
