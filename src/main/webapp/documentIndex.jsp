@@ -431,6 +431,7 @@
                     action_nav: function () {
                         return myNavFunction(this.id);
                     },
+                    today:true,
                     ajax: {
                         url: "show_data.php?action=1",
                         modal: true
