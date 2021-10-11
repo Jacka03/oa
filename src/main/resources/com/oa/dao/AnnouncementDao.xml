@@ -3,24 +3,53 @@
 <mapper namespace="com.oa.dao.AnnouncementDao">
 
     <insert id="insert">
-        insert into announcement_inf(title, content, create_time, uid) value(#{title}, #{content}, #{createTime}, #{uid})
+        insert into announcement_inf(title, content, create_time, uid) value (#{title}, #{content}, now(), #{uid})
 
     </insert>
     <update id="update">
-        update announcement_inf set title = #{title}, content = #{content}, create_time = #{createTime}, uid = #{uid} where id = #{id}
+        update announcement_inf
+        set title       = #{title},
+            content     = #{content},
+--             uid         = #{uid}
+        where id = #{id}
     </update>
     <delete id="deleteAnnouncementById">
-        delete from announcement_inf where id = #{id}
+        delete
+        from announcement_inf
+        where id = #{id}
     </delete>
 
-    <select id="findAll" resultType="com.oa.pojo.Announcement">
-        select * from announcement_inf
-            <if test="title != null and title != ''">
-                 where title LIKE '%${title}%'
-            </if>
+    <resultMap id="announcementMap" type="com.oa.pojo.Announcement">
 
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="createTime" column="create_time"/>
+        <result property="uid" column="uid"/>
+
+        <association property="user" javaType="com.oa.pojo.User">
+            <id property="id" column="id"/>
+            <result property="loginname" column="loginname"/>
+            <result property="password" column="password"/>
+            <result property="status" column="status"/>
+            <result property="createDate" column="create_date"/>
+            <result property="username" column="username"/>
+            <result property="imgname" column="imgname"/>
+        </association>
+    </resultMap>
+
+    <select id="findAll" resultMap="announcementMap">
+        select * from announcement_inf
+        inner join user_inf on user_inf.id = announcement_inf.uid
+        <if test="title != null and title != ''">
+            where title LIKE '%${title}%'
+        </if>
+        ORDER BY create_time desc
     </select>
+
     <select id="queryAnnouncementById" resultType="com.oa.pojo.Announcement">
-        select * from announcement_inf where id = #{id}
+        select *
+        from announcement_inf
+        where id = #{id}
     </select>
 </mapper>

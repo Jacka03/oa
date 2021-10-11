@@ -244,11 +244,11 @@
                                     <thead>
                                     <!-- table中标题 -->
                                     <tr>
-                                        <th><i class="fa fa-bullhorn"></i>id</th>
-                                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> title</th>
-                                        <th><i class=" fa fa-edit"></i> content</th>
-                                        <th><i class=" fa fa-edit"></i> create_time</th>
-                                        <th><i class=" fa fa-edit"></i> uid</th>
+                                        <th><i class="fa fa-bullhorn"></i> 公告id</th>
+                                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> 标题</th>
+                                        <th><i class="fa fa-bookmark"></i> 正文</th>
+                                        <th><i class=" fa fa-edit"></i> 创建时间</th>
+                                        <th><i class=" fa fa-edit"></i> 上传人</th>
                                         <th>操作</th>
                                     </tr>
                                     </thead>
@@ -261,7 +261,7 @@
                                             <td>${Item.title}</td>
                                             <td>${Item.content}</td>
                                             <td>${Item.createTime}</td>
-                                            <td>${Item.uid}</td>
+                                            <td>${Item.user.username}</td>
                                             <td>
                                                 <button class="btn btn-primary btn-xs">
                                                     <a href="toUpdateAnnouncement?id=${Item.id}"

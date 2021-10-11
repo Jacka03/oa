@@ -3,7 +3,7 @@
 <mapper namespace="com.oa.dao.DocumentDao">
     <insert id="insert">
         insert into document_inf(filename, remark, uploader, create_date)
-        value (#{filename}, #{remark}, #{uploader}, #{createDate})
+        value (#{filename}, #{remark}, #{uploader}, now())
     </insert>
     <update id="update">
         update document_inf
@@ -13,12 +13,6 @@
             </if>
             <if test="remark != null">
                 remark = #{remark},
-            </if>
-            <if test="uploader != null">
-                uploader = #{uploader},
-            </if>
-            <if test="createDate != null">
-                create_date = #{createDate},
             </if>
         </set>
         where id = #{id}

@@ -3,6 +3,7 @@ package com.oa.dao;
 
 import com.github.pagehelper.Page;
 import com.oa.pojo.Announcement;
+import org.apache.ibatis.annotations.Param;
 
 public interface AnnouncementDao {
 
@@ -18,7 +19,7 @@ public interface AnnouncementDao {
 
     boolean insert(Announcement announcement);
 
-    Announcement queryAnnouncementById(Integer id);
+    Announcement queryAnnouncementById(@Param("id") Integer id);
 
     boolean update(Announcement announcement);
     //

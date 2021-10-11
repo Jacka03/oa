@@ -1,7 +1,6 @@
 package com.oa.pojo;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class User implements Serializable {
 
@@ -9,7 +8,7 @@ public class User implements Serializable {
   private String loginname;
   private String password;
   private Integer status;
-  private Date createDate;
+  private String createDate;
   private String username;
   private String imgname;
 
@@ -78,11 +77,11 @@ public class User implements Serializable {
     this.status = status;
   }
 
-  public Date getCreateDate() {
+  public String getCreateDate() {
     return createDate;
   }
 
-  public void setCreateDate(Date createDate) {
+  public void setCreateDate(String createDate) {
     this.createDate = createDate;
   }
 

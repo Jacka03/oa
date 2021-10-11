@@ -26,6 +26,8 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public boolean deleteDocument(Integer id) {
+
+
         return documentDao.deleteDocument(id);
     }
 

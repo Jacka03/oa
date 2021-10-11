@@ -48,22 +48,21 @@
                             </div>
                             <div class="modal-body">
                                 <p>content：</p>
-                                <input type="text" name="content" value="${announcement.content}"
-                                       placeholder="请输入content" autocomplete="off"
-                                       class="form-control placeholder-no-fix">
+                                <textarea type="text" name="content"
+                                          autocomplete="off" class="form-control placeholder-no-fix">${announcement.content}</textarea>
                             </div>
-                            <div class="modal-body">
-                                <p>createTime：</p>
-                                <input type="text" name="createTime" value="${announcement.createTime}"
-                                       placeholder="请输入create_time" autocomplete="off"
-                                       class="form-control placeholder-no-fix">
-                            </div>
-                            <div class="modal-body">
-                                <p>uid：</p>
-                                <input type="text" name="uid" value="${announcement.uid}"
-                                       placeholder="请输入uid" autocomplete="off"
-                                       class="form-control placeholder-no-fix">
-                            </div>
+<%--                            <div class="modal-body">--%>
+<%--                                <p>createTime：</p>--%>
+<%--                                <input type="text" name="createTime" value="${announcement.createTime}"--%>
+<%--                                       placeholder="请输入create_time" autocomplete="off"--%>
+<%--                                       class="form-control placeholder-no-fix">--%>
+<%--                            </div>--%>
+<%--                            <div class="modal-body">--%>
+<%--                                <p>uid：</p>--%>
+<%--                                <input type="text" name="uid" value="${announcement.uid}"--%>
+<%--                                       placeholder="请输入uid" autocomplete="off"--%>
+<%--                                       class="form-control placeholder-no-fix">--%>
+<%--                            </div>--%>
 
                             <div class="modal-footer">
                                 <button data-dismiss="modal" class="btn btn-default"

@@ -49,22 +49,29 @@
                             <li><a data-toggle="modal" href="#insertJobModal">添加岗位</a></li>
                         </ul>
                     </li>
+
                     <li class="sub-menu"><a href="javascript:;"> <i
-                            class="fa fa-tasks"></i> <span>公告模块</span>
+                            class="fa fa-th"></i> <span>公告管理</span>
                     </a>
                         <ul class="sub">
-                            <li><a href="queryAnnouncement">公告信息</a></li>
-                            <li><a data-toggle="modal" href="#insertAnnouncementModal">添加公告</a></li>
+                            <li><a href="queryAnnouncement">公告展示</a></li>
+                            <c:if test="${NowUser!=null&&NowUser.status==1}">
+                                <li><a data-toggle="modal" href="#insertAnnouncementModal">添加公告</a></li>
+                            </c:if>
                         </ul>
                     </li>
                     <li class="sub-menu"><a href="javascript:;"> <i
-                            class="fa fa-tasks"></i> <span>文件模块</span>
+                            class=" fa fa-bar-chart-o"></i> <span>文件管理</span>
                     </a>
                         <ul class="sub">
-                            <li><a href="queryDocument">文件信息</a></li>
-                            <li><a data-toggle="modal" href="#insertDocumentModal">添加文件</a></li>
+                            <li><a href="queryDocument">文件显示及下载</a></li>
+                            <c:if test="${NowUser!=null&&NowUser.status==1}">
+                                <li><a data-toggle="modal" href="#insertDocumentModal">上传文件</a></li>
+                            </c:if>
                         </ul>
                     </li>
+
+
                 </ul>
                 <!-- sidebar menu end-->
             </div>
@@ -360,18 +367,18 @@
                             <p>content：</p>
                             <input type="text" name="content" placeholder="请输入content"
                                    autocomplete="off" class="form-control placeholder-no-fix">
-
                         </div>
-                        <div class="modal-body">
-                            <p>create_time：</p>
-                            <input type="text" name="create_time" placeholder="请输入create_time"
-                                   autocomplete="off" class="form-control placeholder-no-fix">
-                        </div>
-                        <div class="modal-body">
-                            <p>uid：</p>
-                            <input type="text" name="uid" placeholder="请输入uid"
-                                   autocomplete="off" class="form-control placeholder-no-fix">
-                        </div>
+                        <input name="uid" value="${NowUser.id}" type="hidden"/>
+<%--                        <div class="modal-body">--%>
+<%--                            <p>create_time：</p>--%>
+<%--                            <input type="text" name="create_time" placeholder="请输入create_time"--%>
+<%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
+<%--                        </div>--%>
+<%--                        <div class="modal-body">--%>
+<%--                            <p>uid：</p>--%>
+<%--                            <input type="text" name="uid" placeholder="请输入uid"--%>
+<%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
+<%--                        </div>--%>
 
                         <div class="modal-footer">
                             <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
@@ -405,15 +412,16 @@
 
                         <div class="modal-body">
                             <p>remark：</p>
-                            <input type="text" name="remark" placeholder="请输入remark"
-                                   autocomplete="off" class="form-control placeholder-no-fix">
+                            <textarea type="text" name="remark" placeholder="请输入remark"
+                                   autocomplete="off" class="form-control placeholder-no-fix"></textarea>
+                            <input name="uploader" value="${NowUser.username}" type="hidden"/>
                         </div>
 
-                        <div class="modal-body">
-                            <p>uploader：</p>
-                            <input type="text" name="uploader" placeholder="请输入uploader"
-                                   autocomplete="off" class="form-control placeholder-no-fix">
-                        </div>
+<%--                        <div class="modal-body">--%>
+<%--                            <p>uploader：</p>--%>
+<%--                            <input type="text" name="uploader" placeholder="请输入uploader"--%>
+<%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
+<%--                        </div>--%>
 
                         <div class="modal-body">
                             <p>file：</p>

@@ -3,8 +3,12 @@ package com.oa.controller;
 import com.github.pagehelper.Page;
 import com.oa.pojo.*;
 import com.oa.service.*;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
+// import java.util.Date;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,7 +62,7 @@ public class UserController {
 
             return "index";
         } else {
-            System.out.println("err");
+            // System.out.println("err");
             return null;
         }
     }
@@ -143,7 +148,7 @@ public class UserController {
         //2、保存user对象数据保存在属性作用
         model.addAttribute("user", user);
         //3、跳转UserUpdate.jsp页面
-        System.out.println(user);
+        // System.out.println(user);
 
         return "userUpdate";
     }
@@ -477,7 +482,7 @@ public class UserController {
 
         String imgname = filepart.getOriginalFilename();
         //创建user对象将数据进行封装
-        System.out.println(filepart);
+        // System.out.println(filepart);
         try {
             filepart.transferTo(new File(filepath + imgname));
 
@@ -516,10 +521,10 @@ public class UserController {
         boolean flag = employeeService.deleteEmployee(id);
 
         if (flag) {
-            System.out.println("delete success");
+            // System.out.println("delete success");
             return "redirect:queryEmployee.action";
         }
-        System.out.println("delete false");
+        // System.out.println("delete false");
         return null;
     }
 
@@ -534,7 +539,7 @@ public class UserController {
         model.addAttribute("deptList", depts.getResult());
         model.addAttribute("jobList", jobs.getResult());
         //3、跳转UserUpdate.jsp页面
-        System.out.println(employee);
+        // System.out.println(employee);
 
         return "employeeUpdate";
     }
@@ -622,17 +627,19 @@ public class UserController {
                                      @RequestParam(value = "content", required = false) String content,
                                      @RequestParam(value = "uid", required = false) Integer uid) {
 
-        User user = userService.queryUserById(uid);
-
-        if (user == null) {
-            System.out.println("uid err");
-            return null;
-        }
+        // User user = userService.queryUserById(uid);
+        //
+        // if (user == null) {
+        //     System.out.println("uid err");
+        //     return null;
+        // }
+        // System.out.println(uid);
+        // System.out.println(this.nowUser.getId());
 
         Announcement announcement = new Announcement();
         announcement.setTitle(title);
         announcement.setContent(content);
-        announcement.setCreateTime(new Date(System.currentTimeMillis()));
+        // announcement.setCreateTime(new Date(System.currentTimeMillis()));
         announcement.setUid(uid);
         boolean flag = announcementService.add(announcement);
 
@@ -654,26 +661,27 @@ public class UserController {
         //2、保存user对象数据保存在属性作用
         model.addAttribute("announcement", announcement);
         //3、跳转UserUpdate.jsp页面
-        System.out.println(announcement);
+        // System.out.println(announcement);
 
         return "announcementUpdate";
     }
 
     @PostMapping("/updateAnnouncement")
     public String updateAnnouncement(Model model,
-                                     @RequestParam(value = "id", required = false) Integer id,
+                                     @RequestParam(value = "uid", required = false) Integer uid,
                                      @RequestParam(value = "title", required = false) String title,
-                                     @RequestParam(value = "content", required = false) String content,
-                                     @RequestParam(value = "createTime", required = false) Date createTime,
-                                     @RequestParam(value = "uid", required = false) Integer uid) {
-        User user = userService.queryUserById(uid);
+                                     @RequestParam(value = "content", required = false) String content) {
+        // User user = userService.queryUserById(uid);
+        //
+        // if (user == null) {
+        //     System.out.println("uid err");
+        //     return null;
+        // }
 
-        if (user == null) {
-            System.out.println("uid err");
-            return null;
-        }
-
-        Announcement announcement = new Announcement(id, title, content, createTime, uid);
+        Announcement announcement = new Announcement();
+        announcement.setTitle(title);
+        announcement.setContent(content);
+        announcement.setUid(uid);
 
 
         boolean flag = announcementService.updateAnnouncement(announcement);
@@ -681,7 +689,7 @@ public class UserController {
         if (flag) {
             return "redirect:queryAnnouncement.action";
         }
-        return "redirect:toUpdateAnnouncement.action?id=" + id;
+        return "redirect:toUpdateAnnouncement.action?id=";
 
     }
 
@@ -717,10 +725,21 @@ public class UserController {
     }
 
     @GetMapping("/deleteDocument")
-    public String deleteDocument(Model model, @RequestParam(value = "id") Integer id) {
+    public String deleteDocument(Model model,
+                                 @RequestParam(value = "id") Integer id,
+                                 @RequestParam(value = "filename") String filename) {
+        //1、删除数据
+        // System.out.println(filename);
 
         boolean flag = documentService.deleteDocument(id);
-        if (flag) {
+        if (!flag) {
+            return null;
+        }
+        File file = new File(filepath + filename);
+        // System.out.println(filepath + filename);
+        boolean delete = file.delete();
+
+        if(delete){
             return "redirect:queryDocument.action";
         }
         return null;
@@ -742,13 +761,12 @@ public class UserController {
         document.setFilename(imgname);
         document.setRemark(remark);
         document.setUploader(uploader);
-        document.setCreateDate(new Date(System.currentTimeMillis()));
-        System.out.println(document);
+        // document.setCreateDate(new Date(System.currentTimeMillis()));
+        // System.out.println(document);
 
         boolean flag = false;
         try {
             filepart.transferTo(new File(filepath + imgname));
-
             flag = documentService.addDocument(document);
 
         } catch (Exception e) {
@@ -774,7 +792,7 @@ public class UserController {
         //2、保存user对象数据保存在属性作用
         model.addAttribute("document", document);
         //3、跳转UserUpdate.jsp页面
-        System.out.println(document);
+        // System.out.println(document);
 
         return "documentUpdate";
     }
@@ -782,15 +800,13 @@ public class UserController {
     @PostMapping("/updateDocument")
     public String updateDocument(Model model,
                                  @RequestParam(value = "id", required = false) Integer id,
-                                 @RequestParam(value = "old_filename", required = false) String old_filename,
+                                 @RequestParam(value = "oldFilename", required = false) String oldFilename,
                                  @RequestParam(value = "filename", required = false) String filename,
-                                 @RequestParam(value = "remark", required = false) String remark,
-                                 @RequestParam(value = "createDate", required = false) Date createDate,
-                                 @RequestParam(value = "uploader", required = false) String uploader) {
+                                 @RequestParam(value = "remark", required = false) String remark) {
 
-        if (!Objects.equals(old_filename, filename)) {
-            String path = filepath + old_filename;
-            System.out.println(path);
+        if (!Objects.equals(oldFilename, filename)) {
+            String path = filepath + oldFilename;
+            // System.out.println(path);
             File file = new File(path);
             file.renameTo(new File(filepath+filename));
         }
@@ -799,9 +815,9 @@ public class UserController {
         document.setId(id);
         document.setRemark(remark);
         document.setFilename(filename);
-        document.setUploader(uploader);
-        document.setCreateDate(createDate);
-        System.out.println(document);
+        // document.setUploader(uploader);
+        // document.setCreateDate(createDate);
+        // System.out.println(document);
 
         boolean flag = documentService.updateDocument(document);
 
@@ -809,6 +825,25 @@ public class UserController {
             return "redirect:queryDocument.action";
         }
         return "redirect:toUpdateDocument.action?id=" + id;
+
+    }
+
+    @GetMapping("/downloadDocument")
+    public ResponseEntity<byte[]> downloadDocument(Model model,
+                                 @RequestParam(value = "filename") String filename) throws IOException {
+
+        // System.out.println(filename);
+        if("".equals(filename)) {
+            return null;
+        }
+
+        File file = new File(filepath + filename);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", URLEncoder.encode(filename, "utf-8"));
+
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+
+        // return null;
 
     }
 

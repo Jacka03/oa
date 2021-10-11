@@ -56,20 +56,18 @@
                                class="form-control placeholder-no-fix">
 
                     </div>
-                    <div class="modal-body">
-                        <p>uploader：</p>
-                        <input type="text" name="uploader" value="${document.uploader}"
-                               placeholder="请输入uploader" autocomplete="off"
-                               class="form-control placeholder-no-fix">
-
-                    </div>
-                    <div class="modal-body">
-                        <p>createDate：</p>
-                        <input type="text" name="createDate" value="${document.createDate}"
-                               placeholder="请输入createDate" autocomplete="off"
-                               class="form-control placeholder-no-fix">
-
-                    </div>
+<%--                    <div class="modal-body">--%>
+<%--                        <p>uploader：</p>--%>
+<%--                        <input type="text" name="uploader" value="${document.uploader}"--%>
+<%--                               placeholder="请输入uploader" autocomplete="off"--%>
+<%--                               class="form-control placeholder-no-fix">--%>
+<%--                    </div>--%>
+<%--                    <div class="modal-body">--%>
+<%--                        <p>createDate：</p>--%>
+<%--                        <input type="text" name="createDate" value="${document.createDate}"--%>
+<%--                               placeholder="请输入createDate" autocomplete="off"--%>
+<%--                               class="form-control placeholder-no-fix">--%>
+<%--                    </div>--%>
 
 <%--                    <div class="modal-body">--%>
 <%--                        <p>file：${document.filename}</p>--%>

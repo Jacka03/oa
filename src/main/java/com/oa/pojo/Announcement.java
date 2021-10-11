@@ -1,14 +1,14 @@
 package com.oa.pojo;
 
 import java.io.Serializable;
-import java.sql.Date;
+
 
 public class Announcement implements Serializable {
 
     private Integer id;
     private String title;
     private String content;
-    private Date createTime;
+    private String createTime;
     private Integer uid;
 
     private User user;
@@ -16,7 +16,7 @@ public class Announcement implements Serializable {
     public Announcement() {
     }
 
-    public Announcement(Integer id, String title, String content, Date createTime, Integer uid) {
+    public Announcement(Integer id, String title, String content, String createTime, Integer uid) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -30,9 +30,18 @@ public class Announcement implements Serializable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", createData=" + createTime +
+                ", createTime=" + createTime +
                 ", uid=" + uid +
+                ", user=" + user +
                 '}';
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Integer getId() {
@@ -59,11 +68,11 @@ public class Announcement implements Serializable {
         this.content = content;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 

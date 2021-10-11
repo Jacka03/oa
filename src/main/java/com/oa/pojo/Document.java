@@ -1,13 +1,13 @@
 package com.oa.pojo;
 
 import java.io.Serializable;
-import java.sql.Date;
+
 
 public class Document implements Serializable {
     private Integer id;
     private String filename;
     private String remark;
-    private Date createDate;
+    private String createDate;
     private String uploader;
 
     public Document() {
@@ -49,11 +49,11 @@ public class Document implements Serializable {
         this.remark = remark;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 

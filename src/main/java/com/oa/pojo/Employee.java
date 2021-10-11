@@ -1,7 +1,7 @@
 package com.oa.pojo;
 
 import java.io.Serializable;
-import java.sql.Date;
+
 
 public class Employee implements Serializable {
 
@@ -17,7 +17,7 @@ public class Employee implements Serializable {
     private String party;
     private String race;
     private String education;
-    private Date createDate;
+    private String createDate;
     private String imgname;
 
     private String deptName;
@@ -29,7 +29,7 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(Integer id, String password, Integer deptId, Integer jobId, String name, String cardId, String phone, String email, Integer sex, String party, String race, String education, Date createDate, String imgname, String deptName, String jobName) {
+    public Employee(Integer id, String password, Integer deptId, Integer jobId, String name, String cardId, String phone, String email, Integer sex, String party, String race, String education, String createDate, String imgname, String deptName, String jobName) {
         this.id = id;
         this.password = password;
         this.deptId = deptId;
@@ -48,7 +48,7 @@ public class Employee implements Serializable {
         this.jobName = jobName;
     }
 
-    public Employee(Integer id, String password, Integer deptId, Integer jobId, String name, String cardId, String phone, String email, Integer sex, String party, String race, String education, Date createDate, String imgname) {
+    public Employee(Integer id, String password, Integer deptId, Integer jobId, String name, String cardId, String phone, String email, Integer sex, String party, String race, String education, String createDate, String imgname) {
         this.id = id;
         this.password = password;
         this.deptId = deptId;
@@ -65,7 +65,7 @@ public class Employee implements Serializable {
         this.imgname = imgname;
     }
 
-    public Employee(Integer id, String password, Integer deptId, Integer jobId, String name, String cardId, String phone, String email, Integer sex, String party, String race, String education, Date createDate, String imgname, Dept dept, Job job) {
+    public Employee(Integer id, String password, Integer deptId, Integer jobId, String name, String cardId, String phone, String email, Integer sex, String party, String race, String education, String createDate, String imgname, Dept dept, Job job) {
         this.id = id;
         this.password = password;
         this.deptId = deptId;
@@ -234,11 +234,11 @@ public class Employee implements Serializable {
         this.education = education;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
