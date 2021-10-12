@@ -198,7 +198,7 @@
                 </div>
                 <div class="top-menu">
                     <ul class="nav pull-right top-menu">
-                        <li><a class="logout" href="login.html">Logout</a></li>
+                        <li><a class="logout" href="logout">Logout</a></li>
                     </ul>
                 </div>
             </header>
@@ -267,7 +267,10 @@
                                         <th><i class="fa fa-bookmark"></i>邮箱</th>
                                         <th><i class=" fa fa-edit"></i>学历</th>
                                         <th><i class=" fa fa-edit"></i>入职时间</th>
-                                        <th>操作</th>
+                                        <c:if test="${NowUser!=null&&NowUser.status==1}">
+                                            <th>操作</th>
+
+                                        </c:if>
                                     </tr>
                                     </thead>
                                     <tbody>

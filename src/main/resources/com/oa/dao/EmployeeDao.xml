@@ -113,5 +113,9 @@
         where id = #{id}
     </update>
 
+    <select id="queryEmployeeByLoginnameAndPassword" resultType="com.oa.pojo.Employee">
+        select * from employee_inf where name = #{loginname} and password = #{password};
+    </select>
+
 
 </mapper>

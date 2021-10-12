@@ -197,7 +197,7 @@
                 </div>
                 <div class="top-menu">
                     <ul class="nav pull-right top-menu">
-                        <li><a class="logout" href="login.html">Logout</a></li>
+                        <li><a class="logout" href="logout">Logout</a></li>
                     </ul>
                 </div>
             </header>
@@ -257,7 +257,10 @@
                                                 <th><i class=" fa fa-edit"></i> createTime</th>
                                                 <th><i class=" fa fa-edit"></i> uploader</th>
                                                 <th><i class=" fa fa-edit"></i> download</th>
-                                                <th>操作</th>
+                                                <c:if test="${NowUser!=null&&NowUser.status==1}">
+                                                    <th>操作</th>
+
+                                                </c:if>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -274,14 +277,14 @@
                                                     <td>${Item.uploader}</td>
 
                                                     <td>
-                                                        <c:if test="${NowUser!=null&&NowUser.status==1}">
-                                                            <button class="btn btn-primary btn-xs">
-                                                                <a href="downloadDocument?filename=${Item.filename}"
-                                                                   style="color: white;">
-                                                                    <i class="fa fa-tint"></i>
-                                                                </a>
-                                                            </button>
-                                                        </c:if>
+                                                            <%--                                                        <c:if test="${NowUser!=null&&NowUser.status==1}">--%>
+                                                        <button class="btn btn-primary btn-xs">
+                                                            <a href="downloadDocument?filename=${Item.filename}"
+                                                               style="color: white;">
+                                                                <i class="fa fa-tint"></i>
+                                                            </a>
+                                                        </button>
+                                                            <%--                                                        </c:if>--%>
                                                     </td>
                                                     <td>
                                                         <c:if test="${NowUser!=null&&NowUser.status==1}">
@@ -431,7 +434,7 @@
                     action_nav: function () {
                         return myNavFunction(this.id);
                     },
-                    today:true,
+                    today: true,
                     ajax: {
                         url: "show_data.php?action=1",
                         modal: true

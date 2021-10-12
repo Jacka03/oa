@@ -9,70 +9,118 @@
     <body>
         <!--sidebar start-->
         <aside>
-            <div id="sidebar"  class="nav-collapse ">
+            <div id="sidebar" class="nav-collapse ">
                 <!-- sidebar menu start-->
-                <ul class="sidebar-menu" id="nav-accordion">
+                <%--                管理员菜单--%>
+                <c:if test="${NowUser != null}">
+                    <ul class="sidebar-menu" id="nav-accordion">
 
-                    <p class="centered"><a href="profile.html"><img src="assets/img/${NowUser.imgname}" class="img-circle" width="60"></a></p>
-                    <h5 class="centered">${NowUser.username}</h5>
+                        <p class="centered"><a href="profile.html"><img src="assets/img/${NowUser.imgname}"
+                                                                        class="img-circle" width="60"></a></p>
+                        <h5 class="centered">${NowUser.username}</h5>
 
-                    <li class="sub-menu"><a href="javascript:;"> <i
-                            class="fa fa-desktop"></i> <span>管理员模块</span>
-                    </a>
-                        <ul class="sub">
-                            <li><a href="queryUser">管理员信息</a></li>
-                            <li><a data-toggle="modal" href="#insertUserModal">添加管理员</a></li>
-                        </ul>
-                    </li>
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class="fa fa-desktop"></i> <span>管理员模块</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryUser">管理员信息</a></li>
+                                <li><a data-toggle="modal" href="#insertUserModal">添加管理员</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="sub-menu"><a href="javascript:;"> <i
-                            class="fa fa-cogs"></i> <span>员工模块</span>
-                    </a>
-                        <ul class="sub">
-                            <li><a href="queryEmployee">员工信息</a></li>
-                            <li><a data-toggle="modal" href="#insertEmployeeModal">添加员工</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu"><a href="javascript:;"> <i
-                            class="fa fa-book"></i> <span>部门模块</span>
-                    </a>
-                        <ul class="sub">
-                            <li><a href="queryDept">部门信息</a></li>
-                            <li><a data-toggle="modal"  href="#insertDeptModal">添加部门</a></li>
-                        </ul>
-                    </li>
-                    <li class="sub-menu"><a href="javascript:;"> <i
-                            class="fa fa-tasks"></i> <span>岗位模块</span>
-                    </a>
-                        <ul class="sub">
-                            <li><a href="queryJob">岗位信息</a></li>
-                            <li><a data-toggle="modal" href="#insertJobModal">添加岗位</a></li>
-                        </ul>
-                    </li>
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class="fa fa-cogs"></i> <span>员工模块</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryEmployee">员工信息</a></li>
+                                <li><a data-toggle="modal" href="#insertEmployeeModal">添加员工</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class="fa fa-book"></i> <span>部门模块</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryDept">部门信息</a></li>
+                                <li><a data-toggle="modal" href="#insertDeptModal">添加部门</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class="fa fa-tasks"></i> <span>岗位模块</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryJob">岗位信息</a></li>
+                                <li><a data-toggle="modal" href="#insertJobModal">添加岗位</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="sub-menu"><a href="javascript:;"> <i
-                            class="fa fa-th"></i> <span>公告管理</span>
-                    </a>
-                        <ul class="sub">
-                            <li><a href="queryAnnouncement">公告展示</a></li>
-                            <c:if test="${NowUser!=null&&NowUser.status==1}">
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class="fa fa-th"></i> <span>公告管理</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryAnnouncement">公告展示</a></li>
                                 <li><a data-toggle="modal" href="#insertAnnouncementModal">添加公告</a></li>
-                            </c:if>
-                        </ul>
-                    </li>
-                    <li class="sub-menu"><a href="javascript:;"> <i
-                            class=" fa fa-bar-chart-o"></i> <span>文件管理</span>
-                    </a>
-                        <ul class="sub">
-                            <li><a href="queryDocument">文件显示及下载</a></li>
-                            <c:if test="${NowUser!=null&&NowUser.status==1}">
+                            </ul>
+                        </li>
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class=" fa fa-bar-chart-o"></i> <span>文件管理</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryDocument">文件显示及下载</a></li>
                                 <li><a data-toggle="modal" href="#insertDocumentModal">上传文件</a></li>
-                            </c:if>
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
 
+                    </ul>
+                </c:if>
+                <%--                员工菜单--%>
+                <c:if test="${NowEmployee != null}">
+                    <ul class="sidebar-menu" id="nav-accordion">
 
-                </ul>
+                        <p class="centered"><a href="profile.html"><img src="assets/img/${NowEmployee.imgname}"
+                                                                        class="img-circle" width="60"></a></p>
+                        <h5 class="centered">${NowEmployee.name}</h5>
+
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class="fa fa-cogs"></i> <span>员工模块</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryEmployee">员工信息</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class="fa fa-book"></i> <span>部门模块</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryDept">部门信息</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class="fa fa-tasks"></i> <span>岗位模块</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryJob">岗位信息</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class="fa fa-th"></i> <span>公告管理</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryAnnouncement">公告展示</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="sub-menu"><a href="javascript:;"> <i
+                                class=" fa fa-bar-chart-o"></i> <span>文件管理</span>
+                        </a>
+                            <ul class="sub">
+                                <li><a href="queryDocument">文件显示及下载</a></li>
+                                <li><a data-toggle="modal" href="#insertDocumentModal">上传文件</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </c:if>
                 <!-- sidebar menu end-->
             </div>
         </aside>
@@ -133,7 +181,7 @@
             </div>
         </form>
 
-        <!-- employee-->
+        <!-- employee -->
         <form method="post" id="insertEmployee" action="/oa/insertEmployee"
               enctype="multipart/form-data">
             <!-- 模态框Modal -->
@@ -260,9 +308,9 @@
                 </div>
             </div>
         </form>
-        <!-- employee"-->
+        <!-- employee -->
 
-        <%--  dept--%>
+        <%--  dept-- %>
         <form method="post" action="/oa/insertDept" enctype="multipart/form-data">
             <!-- 模态框Modal -->
             <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
@@ -302,7 +350,7 @@
             </div>
         </form>
 
-        <%--  job--%>
+        <%--  job-- %>
         <form method="post" action="/oa/insertJob" enctype="multipart/form-data">
             <!-- 模态框Modal -->
             <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
@@ -342,7 +390,7 @@
             </div>
         </form>
 
-        <%-- announcement--%>
+        <%-- announcement --%>
         <form method="post" action="/oa/insertAnnouncement" enctype="multipart/form-data">
             <!-- 模态框Modal -->
             <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
@@ -369,16 +417,16 @@
                                    autocomplete="off" class="form-control placeholder-no-fix">
                         </div>
                         <input name="uid" value="${NowUser.id}" type="hidden"/>
-<%--                        <div class="modal-body">--%>
-<%--                            <p>create_time：</p>--%>
-<%--                            <input type="text" name="create_time" placeholder="请输入create_time"--%>
-<%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
-<%--                        </div>--%>
-<%--                        <div class="modal-body">--%>
-<%--                            <p>uid：</p>--%>
-<%--                            <input type="text" name="uid" placeholder="请输入uid"--%>
-<%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
-<%--                        </div>--%>
+                        <%--                        <div class="modal-body">--%>
+                        <%--                            <p>create_time：</p>--%>
+                        <%--                            <input type="text" name="create_time" placeholder="请输入create_time"--%>
+                        <%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
+                        <%--                        </div>--%>
+                        <%--                        <div class="modal-body">--%>
+                        <%--                            <p>uid：</p>--%>
+                        <%--                            <input type="text" name="uid" placeholder="请输入uid"--%>
+                        <%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
+                        <%--                        </div>--%>
 
                         <div class="modal-footer">
                             <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
@@ -404,24 +452,30 @@
                             </button>
                             <h4 class="modal-title">添加文件</h4>
                         </div>
-<%--                        <div class="modal-body">--%>
-<%--                            <p>filename：</p>--%>
-<%--                            <input type="text" name="filename" placeholder="请输入filename"--%>
-<%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
-<%--                        </div>--%>
+                        <%--                        <div class="modal-body">--%>
+                        <%--                            <p>filename：</p>--%>
+                        <%--                            <input type="text" name="filename" placeholder="请输入filename"--%>
+                        <%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
+                        <%--                        </div>--%>
 
                         <div class="modal-body">
                             <p>remark：</p>
                             <textarea type="text" name="remark" placeholder="请输入remark"
-                                   autocomplete="off" class="form-control placeholder-no-fix"></textarea>
-                            <input name="uploader" value="${NowUser.username}" type="hidden"/>
+                                      autocomplete="off" class="form-control placeholder-no-fix"></textarea>
+                            <c:if test="${NowUser != null}">
+                                <input name="uploader" value="${NowUser.username}" type="hidden"/>
+                            </c:if>
+                            <c:if test="${NowEmployee != null}">
+                                <input name="uploader" value="${NowEmployee.name}" type="hidden"/>
+                            </c:if>
+
                         </div>
 
-<%--                        <div class="modal-body">--%>
-<%--                            <p>uploader：</p>--%>
-<%--                            <input type="text" name="uploader" placeholder="请输入uploader"--%>
-<%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
-<%--                        </div>--%>
+                        <%--                        <div class="modal-body">--%>
+                        <%--                            <p>uploader：</p>--%>
+                        <%--                            <input type="text" name="uploader" placeholder="请输入uploader"--%>
+                        <%--                                   autocomplete="off" class="form-control placeholder-no-fix">--%>
+                        <%--                        </div>--%>
 
                         <div class="modal-body">
                             <p>file：</p>
@@ -441,5 +495,5 @@
     </body>
 </html>
 
-    </body>
+</body>
 </html>

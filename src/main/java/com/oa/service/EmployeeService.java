@@ -15,4 +15,6 @@ public interface EmployeeService {
     Employee queryEmployeeById(Integer id);
 
     boolean updateEmployee(Employee employee);
+
+    Employee queryEmployeeLogin(String loginname, String password);
 }

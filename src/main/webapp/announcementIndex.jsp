@@ -192,7 +192,7 @@
         </div>
         <div class="top-menu">
             <ul class="nav pull-right top-menu">
-                <li><a class="logout" href="login.html">Logout</a></li>
+                <li><a class="logout" href="logout">Logout</a></li>
             </ul>
         </div>
     </header>
@@ -249,7 +249,10 @@
                                         <th><i class="fa fa-bookmark"></i> 正文</th>
                                         <th><i class=" fa fa-edit"></i> 创建时间</th>
                                         <th><i class=" fa fa-edit"></i> 上传人</th>
-                                        <th>操作</th>
+                                        <c:if test="${NowUser!=null&&NowUser.status==1}">
+                                            <th>操作</th>
+
+                                        </c:if>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -262,22 +265,26 @@
                                             <td>${Item.content}</td>
                                             <td>${Item.createTime}</td>
                                             <td>${Item.user.username}</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-xs">
-                                                    <a href="toUpdateAnnouncement?id=${Item.id}"
-                                                       style="color: white;">
-                                                        <i class="fa fa-pencil"></i>
-                                                    </a>
-                                                </button>
-                                                <button class="btn btn-danger btn-xs">
-                                                    <a href="deleteAnnouncement?id=${Item.id}"
-                                                       style="color: white;">
-                                                        <i style="color: white;"> <i
-                                                                class="fa fa-trash-o "></i>
-                                                        </i>
-                                                    </a>
-                                                </button>
-                                            </td>
+                                            <c:if test="${NowUser!=null&&NowUser.status==1}">
+                                                <td>
+                                                    <button class="btn btn-primary btn-xs">
+                                                        <a href="toUpdateAnnouncement?id=${Item.id}"
+                                                           style="color: white;">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                    </button>
+                                                    <button class="btn btn-danger btn-xs">
+                                                        <a href="deleteAnnouncement?id=${Item.id}"
+                                                           style="color: white;">
+                                                            <i style="color: white;"> <i
+                                                                    class="fa fa-trash-o "></i>
+                                                            </i>
+                                                        </a>
+                                                    </button>
+                                                </td>
+
+                                            </c:if>
+
                                         </tr>
                                     </c:forEach>
                                     <!-- 使用thymeleaf中foreach进行遍历 -->

@@ -15,13 +15,12 @@
     <context:component-scan base-package="com.oa.controller"/>
 
     <context:property-placeholder location="classpath:data.properties" file-encoding="UTF-8"/>
-
     <!--放行所有静态资源-->
     <mvc:default-servlet-handler/>
     <!-- 对静态资源放行 -->
-    <!--<mvc:resources location="/Static-Resources/css/" mapping="/css/**"/>-->
-    <!--<mvc:resources location="/Static-Resources/images/" mapping="/images/**"/>-->
-    <!--<mvc:resources location="/Static-Resources/js/" mapping="/js/**"/>-->
+    <!--<mvc:resources location="/assets/" mapping="/css/**"/>-->
+    <!--<mvc:resources location="/assets/" mapping="/img/**"/>-->
+    <!--<mvc:resources location="/assets/" mapping="/js/**"/>-->
 
     <!-- 3.视图解释器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

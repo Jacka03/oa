@@ -42,4 +42,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public boolean updateEmployee(Employee employee) {
         return employeeDao.update(employee) > 0;
     }
+
+    @Override
+    public Employee queryEmployeeLogin(String loginname, String password) {
+        return employeeDao.queryEmployeeByLoginnameAndPassword(loginname, password);
+    }
 }

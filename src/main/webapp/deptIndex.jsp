@@ -197,7 +197,7 @@
                 </div>
                 <div class="top-menu">
                     <ul class="nav pull-right top-menu">
-                        <li><a class="logout" href="login.html">Logout</a></li>
+                        <li><a class="logout" href="logout">Logout</a></li>
                     </ul>
                 </div>
             </header>
@@ -253,7 +253,10 @@
                                                 <th><i class="fa fa-bullhorn"></i> 部门id</th>
                                                 <th class="hidden-phone"><i class="fa fa-question-circle"></i> Name</th>
                                                 <th><i class="fa fa-bookmark"></i>Remark</th>
-                                                <th>操作</th>
+                                                <c:if test="${NowUser!=null&&NowUser.status==1}">
+                                                    <th>操作</th>
+
+                                                </c:if>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -264,22 +267,25 @@
                                                     <td><a href="basic_table.html#">${Item.id}</a></td>
                                                     <td class="hidden-phone">${Item.name}</td>
                                                     <td class="hidden-phone">${Item.remark}</td>
-                                                    <td>
-                                                        <button class="btn btn-primary btn-xs">
-                                                            <a href="toUpdateDept?id=${Item.id}"
-                                                               style="color: white;">
-                                                                <i class="fa fa-pencil"></i>
-                                                            </a>
-                                                        </button>
-                                                        <button class="btn btn-danger btn-xs">
-                                                            <a href="deleteDept?id=${Item.id}"
-                                                               style="color: white;">
-                                                                <i style="color: white;"> <i
-                                                                        class="fa fa-trash-o "></i>
-                                                                </i>
-                                                            </a>
-                                                        </button>
-                                                    </td>
+                                                    <c:if test="${NowUser!=null&&NowUser.status==1}">
+                                                        <td>
+                                                            <button class="btn btn-primary btn-xs">
+                                                                <a href="toUpdateDept?id=${Item.id}"
+                                                                   style="color: white;">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                            </button>
+                                                            <button class="btn btn-danger btn-xs">
+                                                                <a href="deleteDept?id=${Item.id}"
+                                                                   style="color: white;">
+                                                                    <i style="color: white;"> <i
+                                                                            class="fa fa-trash-o "></i>
+                                                                    </i>
+                                                                </a>
+                                                            </button>
+                                                        </td>
+
+                                                    </c:if>
                                                 </tr>
                                             </c:forEach>
                                             <!-- 使用thymeleaf中foreach进行遍历 -->

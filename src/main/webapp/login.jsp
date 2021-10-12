@@ -36,7 +36,9 @@ MAIN CONTENT
     <div class="container">
 
         <form class="form-login" action="/oa/loginUser">
-            <h2 class="form-login-heading">sign in now</h2>
+            <input type="hidden"  value="${NowUser}" >
+            <input type="hidden"  value="${NowEmployee}" >
+            <h2 class="form-login-heading">User sign in</h2>
             <div class="login-wrap">
                 <input type="text" class="form-control" name="loginname" value="${loginname}"
                        placeholder="User LoginName" autofocus>

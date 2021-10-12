@@ -18,4 +18,7 @@ public interface EmployeeDao {
     Employee queryEmployeeById(Integer id);
 
     Integer update(Employee employee);
+
+    Employee queryEmployeeByLoginnameAndPassword(@Param("loginname")String loginname, @Param("password")String password);
+
 }

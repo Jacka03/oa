@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 // import java.util.Date;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
+@SessionAttributes
 @RequestMapping("/")
 public class UserController {
 
@@ -44,15 +46,22 @@ public class UserController {
     @GetMapping("/loginUser")
     public String login(Model model,
                         HttpServletRequest request,
+                        HttpSession session,
                         @RequestParam("loginname") String loginname,
                         @RequestParam("password") String password) {
 
+        this.nowEmployee = null;
         User user = userService.login(loginname, password);
         this.nowUser = user;
         if (user != null) {
             String temPath = filepath + this.nowUser.getImgname();
 
+            session.setAttribute("NowEmployee", null);
+            session.setAttribute("NowUser", this.nowUser);
+
             model.addAttribute("NowUser", user);
+            model.addAttribute("NowEmployee", this.nowEmployee);
+
             model.addAttribute("filepath", temPath);
 
             depts = deptService.queryDeptList();
@@ -75,6 +84,8 @@ public class UserController {
         Page<User> page = userService.queryUser(curPageNumber, pageSize, name);
 
         model.addAttribute("NowUser", this.nowUser);
+        model.addAttribute("NowEmployee", this.nowEmployee);
+
 
         depts = deptService.queryDeptList();
         jobs = jobService.queryJobList();
@@ -184,6 +195,8 @@ public class UserController {
 
         boolean flag = userService.updateUser(user);
         model.addAttribute("NowUser", this.nowUser);
+        model.addAttribute("NowEmployee", this.nowEmployee);
+
 
         if (flag) {
             return "redirect:queryUser.action";
@@ -223,6 +236,8 @@ public class UserController {
         // System.out.println(name);
 
         model.addAttribute("NowUser", this.nowUser);
+        model.addAttribute("NowEmployee", this.nowEmployee);
+
         depts = deptService.queryDeptList();
         jobs = jobService.queryJobList();
         model.addAttribute("deptList", depts.getResult());
@@ -339,6 +354,8 @@ public class UserController {
 
 
         model.addAttribute("NowUser", this.nowUser);
+        model.addAttribute("NowEmployee", this.nowEmployee);
+
         depts = deptService.queryDeptList();
         jobs = jobService.queryJobList();
         model.addAttribute("deptList", depts.getResult());
@@ -456,6 +473,8 @@ public class UserController {
         List<Employee> result = page.getResult();
 
         model.addAttribute("NowUser", this.nowUser);
+        model.addAttribute("NowEmployee", this.nowEmployee);
+
 
         model.addAttribute("employeeList", result);
         model.addAttribute("pageInfo", page.toPageInfo());
@@ -600,6 +619,8 @@ public class UserController {
         // }
 
         model.addAttribute("NowUser", this.nowUser);
+        model.addAttribute("NowEmployee", this.nowEmployee);
+
         depts = deptService.queryDeptList();
         jobs = jobService.queryJobList();
         model.addAttribute("deptList", depts.getResult());
@@ -704,6 +725,8 @@ public class UserController {
         // Page<User> page = userService.queryUser(curPageNumber, pageSize, name);
 
         model.addAttribute("NowUser", this.nowUser);
+        model.addAttribute("NowEmployee", this.nowEmployee);
+
         depts = deptService.queryDeptList();
         jobs = jobService.queryJobList();
         model.addAttribute("deptList", depts.getResult());
@@ -844,9 +867,62 @@ public class UserController {
 
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
 
-        // return null;
-
     }
+
+    // ------------------------------------------------------
+    // TODO 单独分离出员工
+
+    /**
+     * 以下是员工操作
+     *
+     */
+
+    private Employee nowEmployee;
+
+    @GetMapping("/queryEmployeeLogin")
+    public String queryEmployeeLogin(Model model,
+                        HttpSession session,
+                        @RequestParam("loginname") String loginname,
+                        @RequestParam("password") String password) {
+
+        // System.out.println(loginname + password);
+
+        this.nowUser = null;
+        Employee employee = employeeService.queryEmployeeLogin(loginname, password);
+        this.nowEmployee = employee;
+
+        if (employee != null) {
+            // System.out.println(employee);
+
+            session.setAttribute("NowEmployee", this.nowEmployee);
+            session.setAttribute("NowUser", null);
+
+            model.addAttribute("NowEmployee", this.nowEmployee);
+            model.addAttribute("NowUser", this.nowUser);
+
+            depts = deptService.queryDeptList();
+            jobs = jobService.queryJobList();
+            model.addAttribute("deptList", depts.getResult());
+            model.addAttribute("jobList", jobs.getResult());
+
+            return "index";
+        } else {
+            // System.out.println("err");
+            return null;
+        }
+    }
+
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.setAttribute("NowEmployee", null);
+        session.setAttribute("NowUser", null);
+
+        return "redirect:/login_Emp.jsp";
+    }
+
+
+
 
 
 }
